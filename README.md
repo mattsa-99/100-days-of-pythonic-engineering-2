@@ -44,6 +44,10 @@ Se llena unos días después de publicar (LinkedIn → "Ver analíticas"). Sirve
 | 02 | Errores | Texto | | | | | | |
 | 03 | Errores | Texto | | | | | | |
 
+## Databricks esta semana
+
+Serie paralela: una noticia de Databricks por semana con un ejemplo real. Seguimiento en [`news/README.md`](news/README.md).
+
 ## Estructura del repo
 
 ```
@@ -58,6 +62,7 @@ days/dayNN_slug/
 └── preview/slide-N.png       # PNG de cada lámina para revisión
 scripts/render.sh             # build.py → HTML → PDF → PNG
 scripts/preview_pdf.swift     # PDF → PNG en macOS cuando no hay pdftoppm
+news/                         # serie paralela "Databricks esta semana" (una carpeta por semana)
 docs/                         # Plan Maestro V3
 ```
 

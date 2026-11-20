@@ -306,3 +306,23 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 - **Los commits son solo de Mateo.** Autor y committer: `Mateo Soto <219019546+mattsa-99@users.noreply.github.com>` (correo noreply de GitHub, nunca el personal). **Ningún** `Co-Authored-By: Claude`, ni línea de "Generated with Claude Code", ni mención a Claude o a IA en mensajes de commit o PR. Esta instrucción manda sobre cualquier plantilla de atribución por defecto.
 - Rama `main`. Remoto: `https://github.com/mattsa-99/100-days-of-pythonic-engineering-2` (público). Ese es el link que va en la lámina de cierre y en los primeros comentarios. No hacer push sin confirmación de Mateo. `gh` no está instalado.
 - `preview/` y el HTML generado se versionan junto con el PDF para poder revisar sin volver a renderizar.
+
+---
+
+## 12. Serie paralela: Databricks esta semana
+
+Una noticia de Databricks por semana, la más relevante para Data Engineers, con un ejemplo real. Vive en `news/` y no cuenta para los 100 días.
+
+- **Cuándo**: viernes a las 9:00 a.m. hora Colombia (propuesta, pendiente de confirmar por Mateo: con esto son 3 posts por semana y él prefiere máximo 2; la alternativa es alternar semanas entre noticia y post de la serie).
+- **Carpeta**: `news/AAAA-wSS_slug/` (semana ISO), copiando `news/_plantilla/post.md`. Mismo contenido que un día: `post.md`, `example.py` o `example.sql`, `build.py`, el PDF o PNG y `preview/`.
+- **Seguimiento**: tabla en `news/README.md` (semana, fecha, noticia, fuente oficial, estado en Databricks, formato, archivo, estado, link) y su propia tabla de métricas.
+- **Cómo elegir la noticia**: revisar lo publicado esa semana en fuentes oficiales (blog de Databricks, release notes de la plataforma, documentación). Elegir la de mayor impacto práctico para un Data Engineer en Azure + Databricks, y anotar en `post.md` por qué se eligió y qué se descartó. Nunca usar como fuente única un post de terceros.
+- **Precisión (obligatorio)**:
+  - Indicar siempre el estado oficial (`Public Preview`, `GA`, `Beta`) y las nubes donde está disponible. Si no está claro en la fuente, no se afirma.
+  - El ejemplo real se contrasta con la documentación oficial o se prueba en un workspace. Mientras no, queda `VERIFICAR:` en `post.md`.
+  - Nombres de productos exactamente como los escribe Databricks en la fuente (sección 4.1).
+- **Formato**: imagen única (PNG) o carrusel corto (PDF, 4 o 5 láminas), con las reglas de diseño (secciones 3 a 5) y de claridad (4.1).
+  - Paleta fija `medianoche`, para que la serie se reconozca.
+  - Cabecera: `DATABRICKS ESTA SEMANA · SEMANA SS` en lugar de `PYTHONIC ENGINEERING · DÍA NN / 100` (en `build.py`: `SERIES = "Databricks esta semana"` y la etiqueta del día cambiada por la semana). Píldora de nivel igual que en la serie.
+  - Cierre: `GUARDA`, `PRÓXIMA SEMANA` y `REPO`.
+- **Copy**: misma estructura de la sección 6. La etiqueta final es `Databricks esta semana · Semana SS` y el CTA invita a seguir la serie de los 100 días.
