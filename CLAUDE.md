@@ -205,7 +205,7 @@ Reglas:
 **Por qué este formato** (revisión del 19 nov 2026): se analizaron posts públicos de Zach Wilson y de una creadora de Data con 83k seguidores. Patrones: hook directo sin etiquetas, listas numeradas `Término → explicación`, entre 0 y 3 emojis, 0 o 1 hashtag, sin código en el cuerpo, y los posts personales con más reacciones. La muestra es pequeña (4 posts): se valida con la tabla de Métricas en la revisión del Día 08.
 
 **Cuándo publicar** (decidido por Mateo el 19 nov 2026; ajustar con las métricas propias):
-- **2 posts por semana: martes y jueves a las 9:00 a.m. hora Colombia** (8:00 a.m. hora CDMX). Máximo 2 por semana.
+- **3 posts por semana, todos a las 9:00 a.m. hora Colombia** (8:00 a.m. hora CDMX): **martes y jueves** la serie de los 100 días, y **viernes** la serie de noticias "Databricks esta semana" (sección 12). No más de 2 posts de la serie por semana.
 - Los dos días están en la mejor ventana de los estudios (martes a jueves por la mañana) y separados por un día, para que un post no le quite alcance al otro.
 - Evitar fines de semana y festivos (ej. 8 de diciembre en Colombia; 24, 25 y 31 de diciembre, y 1 de enero): ese día se salta al siguiente martes o jueves.
 - Anotar día y hora real de cada post en la tabla de Métricas del README para comparar después.
@@ -313,7 +313,7 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 
 Una noticia de Databricks por semana, la más relevante para Data Engineers, con un ejemplo real. Vive en `news/` y no cuenta para los 100 días.
 
-- **Cuándo**: viernes a las 9:00 a.m. hora Colombia (propuesta, pendiente de confirmar por Mateo: con esto son 3 posts por semana y él prefiere máximo 2; la alternativa es alternar semanas entre noticia y post de la serie).
+- **Cuándo**: todos los viernes a las 9:00 a.m. hora Colombia, con lo más relevante de la semana (confirmado por Mateo el 19 nov 2026). Si el viernes es festivo, se publica el jueves por la tarde o se salta esa semana.
 - **Carpeta**: `news/AAAA-wSS_slug/` (semana ISO), copiando `news/_plantilla/post.md`. Mismo contenido que un día: `post.md`, `example.py` o `example.sql`, `build.py`, el PDF o PNG y `preview/`.
 - **Seguimiento**: tabla en `news/README.md` (semana, fecha, noticia, fuente oficial, estado en Databricks, formato, archivo, estado, link) y su propia tabla de métricas.
 - **Cómo elegir la noticia**: revisar lo publicado esa semana en fuentes oficiales (blog de Databricks, release notes de la plataforma, documentación). Elegir la de mayor impacto práctico para un Data Engineer en Azure + Databricks, y anotar en `post.md` por qué se eligió y qué se descartó. Nunca usar como fuente única un post de terceros.
