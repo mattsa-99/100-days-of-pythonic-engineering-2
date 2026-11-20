@@ -277,5 +277,6 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 ## 11. Git
 
 - Proyecto personal: identidad `Mateo Soto` del git config local. Las reglas de identidad de KOF no aplican.
+- **Los commits son solo de Mateo.** Autor y committer: `Mateo Soto <219019546+mattsa-99@users.noreply.github.com>` (correo noreply de GitHub, nunca el personal). **Ningún** `Co-Authored-By: Claude`, ni línea de "Generated with Claude Code", ni mención a Claude o a IA en mensajes de commit o PR. Esta instrucción manda sobre cualquier plantilla de atribución por defecto.
 - Rama `main`. Remoto: `https://github.com/mattsa-99/100-days-of-pythonic-engineering-2` (público). Ese es el link que va en la lámina de cierre y en los primeros comentarios. No hacer push sin confirmación de Mateo. `gh` no está instalado.
 - `preview/` y el HTML generado se versionan junto con el PDF para poder revisar sin volver a renderizar.
