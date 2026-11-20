@@ -7,29 +7,40 @@ Cada día tiene su carpeta en [`days/`](days/) con el post listo para copiar, el
 
 ## Dónde vamos
 
-**Último publicado:** Día 03 · **Siguiente:** Día 04 (Data Skew, carrusel listo en [`days/day04_data_skew/`](days/day04_data_skew/))
+**Último publicado:** Día 03 · **Siguiente:** Día 04 (Data Skew, PDF de 8 láminas listo en [`days/day04_data_skew/`](days/day04_data_skew/))
 
 ## Tabla de seguimiento
 
-| Día | Nivel | Tema | Tipo | Paleta | Formato | Estado | Link |
+| Día | Tema | Tipo de post | Formato | Archivo que se sube | Estado | Publicado | Link |
 |---|---|---|---|---|---|---|---|
-| 01 | Avanzado | [UDFs: jerarquía del rendimiento](days/day01_udf_performance/) | Errores | (antiguo) | Post de texto + reto | ✅ Publicado | [post](https://lnkd.in/p/eJkNmXQK) |
-| 02 | Intermedio | [dbutils.jobs.taskValues entre tareas](days/day02_task_values/) | Errores | (antiguo) | Post de texto + debate | ✅ Publicado | [post](https://lnkd.in/p/eRmBhjUh) |
-| 03 | Avanzado | [Broadcast Join vs Shuffle Join](days/day03_broadcast_join/) | Errores | (antiguo) | Post de texto | ✅ Publicado | [post](https://lnkd.in/p/emV3d4gM) |
-| 04 | Avanzado | [Data Skew en Spark](days/day04_data_skew/) | Errores que cuestan plata | `pino` | Carrusel PDF | 🎨 Listo | — |
-| 05 | Intermedio | [repartition() vs coalesce()](days/day05_repartition_vs_coalesce/) | Pregunta de entrevista | `medianoche` | Carrusel PDF | ⏳ Pendiente | — |
-| 06 | Avanzado | [ZORDER vs Liquid Clustering](days/day06_zorder_vs_liquid_clustering/) | Opinión / Debate | `medianoche` | Infografía | ⏳ Pendiente | — |
-| 07 | Avanzado | [Medallion: 5 errores comunes](days/day07_medallion_mistakes/) | Arquitectura en una imagen | `bosque` | Infografía | ⏳ Pendiente | — |
-| 08 | Intermedio | [Auto Loader vs COPY INTO](days/day08_auto_loader_vs_copy_into/) | Errores que cuestan plata | `pino` | Infografía | ⏳ Pendiente | — |
-| 09 | Avanzado | [SCD Tipo 2 con MERGE](days/day09_scd2_merge/) | Arquitectura en una imagen | `bosque` | Carrusel PDF | ⏳ Pendiente | — |
-| 10 | Avanzado | [Generadores y yield](days/day10_generators_yield/) | Antes vs. Después | `pino` | Carrusel corto / imagen | ⏳ Pendiente | — |
-| 11 | Intermedio | [5 checks de calidad antes de Silver](days/day11_data_quality_checks/) | Guardable | `bosque` | Carrusel PDF | ⏳ Pendiente | — |
-| 12 | Intermedio | [DefaultAzureCredential](days/day12_default_azure_credential/) | Errores que cuestan plata | `pino` | Carrusel corto / imagen | ⏳ Pendiente | — |
-| 13 | Básico | [Senior vs Junior](days/day13_senior_vs_junior/) | Opinión / Debate | `medianoche` | Texto largo + 1 imagen | ⏳ Pendiente | — |
-| 14 | Avanzado | [Unity Catalog](days/day14_unity_catalog/) | Pregunta de entrevista | `medianoche` | Carrusel PDF | ⏳ Pendiente | — |
-| 15 | Básico | [Roadmap Data Engineer 2026](days/day15_roadmap_2026/) | Guardable | `bosque` | Carrusel PDF | ⏳ Pendiente | — |
+| 01 | [UDFs: jerarquía del rendimiento](days/day01_udf_performance/) | Errores | Post de texto + reto | Texto | ✅ Publicado | antes del repo | [post](https://lnkd.in/p/eJkNmXQK) |
+| 02 | [dbutils.jobs.taskValues entre tareas](days/day02_task_values/) | Errores | Post de texto + debate | Texto | ✅ Publicado | antes del repo | [post](https://lnkd.in/p/eRmBhjUh) |
+| 03 | [Broadcast Join vs Shuffle Join](days/day03_broadcast_join/) | Errores | Post de texto | Texto | ✅ Publicado | antes del repo | [post](https://lnkd.in/p/emV3d4gM) |
+| 04 | [Data Skew en Spark](days/day04_data_skew/) | Errores que cuestan plata | Carrusel | PDF, 8 láminas: [`day04_data_skew.pdf`](days/day04_data_skew/day04_data_skew.pdf) | 🎨 Listo | — | — |
+| 05 | [repartition() vs coalesce()](days/day05_repartition_vs_coalesce/) | Pregunta de entrevista | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
+| 06 | [ZORDER vs Liquid Clustering](days/day06_zorder_vs_liquid_clustering/) | Opinión / Debate | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
+| 07 | [Medallion: 5 errores comunes](days/day07_medallion_mistakes/) | Arquitectura en una imagen | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
+| 08 | [Auto Loader vs COPY INTO](days/day08_auto_loader_vs_copy_into/) | Errores que cuestan plata | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
+| 09 | [SCD Tipo 2 con MERGE](days/day09_scd2_merge/) | Arquitectura en una imagen | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
+| 10 | [Generadores y yield](days/day10_generators_yield/) | Antes vs. Después | Carrusel corto / imagen | PDF o PNG (por decidir) | ⏳ Pendiente | — | — |
+| 11 | [5 checks de calidad antes de Silver](days/day11_data_quality_checks/) | Guardable | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
+| 12 | [DefaultAzureCredential](days/day12_default_azure_credential/) | Errores que cuestan plata | Carrusel corto / imagen | PDF o PNG (por decidir) | ⏳ Pendiente | — | — |
+| 13 | [Senior vs Junior](days/day13_senior_vs_junior/) | Opinión / Debate | Texto largo + 1 imagen | Texto + PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
+| 14 | [Unity Catalog](days/day14_unity_catalog/) | Pregunta de entrevista | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
+| 15 | [Roadmap Data Engineer 2026](days/day15_roadmap_2026/) | Guardable | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
 
-Estados: ⏳ Pendiente → 🎨 Listo (visual renderizado y revisado) → ✅ Publicado
+Estados: ⏳ Pendiente → 🎨 Listo (archivo renderizado y revisado) → ✅ Publicado.
+Nivel y paleta de cada día están en su `post.md`.
+
+## Métricas
+
+Se llena unos días después de publicar (LinkedIn → "Ver analíticas"). Sirve para la revisión del Día 08: ¿qué tipo de post y qué formato generan más guardados y comentarios?
+
+| Día | Tipo de post | Formato | Impresiones | Guardados | Comentarios | Reacciones | Notas |
+|---|---|---|---|---|---|---|---|
+| 01 | Errores | Texto | | | | | |
+| 02 | Errores | Texto | | | | | |
+| 03 | Errores | Texto | | | | | |
 
 ## Estructura del repo
 

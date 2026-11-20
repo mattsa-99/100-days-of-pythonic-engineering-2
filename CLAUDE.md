@@ -241,18 +241,21 @@ Render: `scripts/render.sh days/day04_data_skew pino` (requiere Chrome/Chromium;
 
 ## 9. Seguimiento
 
-La tabla vive en **`README.md`** (una sola fuente de verdad) con columnas Día, Nivel, Tema, Tipo, Paleta, Formato, Estado y Link, más la línea "Dónde vamos".
+La tabla vive en **`README.md`** (una sola fuente de verdad), con dos tablas:
+- **Seguimiento**: Día, Tema, Tipo de post, Formato, **Archivo que se sube** (PDF de N láminas, PNG imagen única o Texto, con link al archivo cuando existe), Estado, **Publicado** (fecha) y Link, más la línea "Dónde vamos". Nivel y paleta están en el `post.md` de cada día.
+- **Métricas**: impresiones, guardados, comentarios y reacciones por post, para la revisión del Día 08.
 
-Estados: `⏳ Pendiente` → `🎨 Listo` (visual renderizado y revisado) → `✅ Publicado`.
+Estados: `⏳ Pendiente` → `🎨 Listo` (archivo renderizado y revisado) → `✅ Publicado`.
 
 - **Visual terminado**: estado `🎨 Listo` en el README y `Listo (dayNN_slug.pdf)` en la tabla de `post.md`. Actualizar "Siguiente".
 - **"Ya salió el Día X"** (con o sin link):
-  1. `README.md`: estado `✅ Publicado`, Link `[post](<url>)`, actualizar "Último publicado" y "Siguiente".
+  1. `README.md`: estado `✅ Publicado`, fecha en "Publicado", Link `[post](<url>)`, y agregar la fila del día a la tabla de Métricas. Actualizar "Último publicado" y "Siguiente".
   2. `days/dayNN_slug/post.md`: filas Estado y Link.
   3. Commit `Day NN: published`.
 - **Días 01 a 03**: publicados antes del repo, con paleta "(antiguo)". Falta el texto publicado y el código: pedírselos a Mateo.
 - **Días nuevos (16+)**: crear `days/dayNN_slug/` con `post.md` en el formato de la sección 6, agregar la fila al README y marcar en `ideas.md` el tema usado.
-- **Revisión de métricas**: después del Día 08 (5 posts del plan V3), pedir guardados y comentarios por post y proponer ajustes.
+- **Visual terminado** también actualiza la columna "Archivo que se sube" con el formato real y el número de láminas (ej. `PDF, 8 láminas`).
+- **Revisión de métricas**: después del Día 08 (5 posts del plan V3), pedir a Mateo los números de la tabla de Métricas (guardados y comentarios sobre todo) y proponer ajustes al calendario.
 
 Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de la sección 2, priorizando lo que tenga más guardados y comentarios en los posts anteriores. Mateo aprueba la lista antes de producir.
 
