@@ -90,7 +90,7 @@ def defs(pairs: list[tuple[str, str]]) -> str:
 
 
 def s2() -> str:
-    cols = [("Llave B", 12, "120 mil"), ("Llave C", 9, "90 mil"), ("Llave D", 14, "140 mil"), ("Llave A", 100, "9.8 M")]
+    cols = [("key B", 12, "120 mil"), ("key C", 9, "90 mil"), ("key D", 14, "140 mil"), ("key A", 100, "9.8 M")]
     bars = []
     for name, h, rows in cols:
         hot = h == 100
@@ -107,14 +107,14 @@ def s2() -> str:
     body = (
         '<div style="margin-top:48px"><div class="kicker">El problema</div>'
         '<h2>Se llama <span class="hl">data skew</span>.</h2>'
-        '<p class="lead" style="margin-top:24px;font-size:34px">En un join, Spark junta las filas que tienen la misma llave. '
-        'Si una llave tiene casi todas las filas, una sola parte del trabajo recibe casi todo.</p></div>'
+        '<p class="lead" style="margin-top:24px;font-size:34px">En un join, Spark junta las filas con la misma <b>key</b> (la columna del join, ej. customer_id). '
+        'Si una key tiene casi todas las filas, una sola partición recibe casi todo.</p></div>'
         '<div style="display:flex;gap:30px;align-items:flex-end;margin-top:30px;height:300px;border-bottom:3px solid #071A22;padding:0 8px">'
         + "".join(bars) + "</div>"
         f'<div style="display:flex;gap:30px;padding:12px 8px 0">{labels}</div>'
         + defs([
             ("Partición", "Un pedazo de tus datos. Cada una la procesa una tarea, en paralelo."),
-            ("Shuffle", "Mover filas entre máquinas para juntar las de la misma llave."),
+            ("Shuffle", "Mover filas por la red para juntar las de la misma key."),
         ])
     )
     return slide(2, "light", body)
@@ -124,7 +124,7 @@ def s2() -> str:
 def s3() -> str:
     items = [
         ("01", "Una tarea dura <b>10x</b> más que la mediana.", "La mediana es lo que dura una tarea típica."),
-        ("02", "Su <b>Shuffle Read</b> es enorme.", "Shuffle Read: datos que recibió de otras máquinas."),
+        ("02", "Su <b>Shuffle Read</b> es enorme.", "Shuffle Read: datos que le llegaron por la red en el shuffle."),
         ("03", "<b>Spill a disco</b> en pocas tareas.", "Spill: no le cabe en memoria y usa el disco (lento)."),
     ]
     lines = "".join(
@@ -152,8 +152,8 @@ def s3() -> str:
 # ---------- 04 · arreglos 1 y 2 ----------
 def s4() -> str:
     fix1 = (
-        '<div class="step"><span class="n">1</span>Quita las filas sin llave</div>'
-        '<p class="why">Una llave NULL nunca encuentra pareja en el join, pero todas esas filas '
+        '<div class="step"><span class="n">1</span>Quita las filas con key NULL</div>'
+        '<p class="why">Una key NULL nunca encuentra pareja en el join, pero todas esas filas '
         'igual viajan juntas a la misma partición.</p>'
         '<div class="code" style="font-size:27px;padding:28px 32px">'
         'events = events.<span class="f">filter</span>(\n'
@@ -181,27 +181,27 @@ def s4() -> str:
 def s5() -> str:
     node = (
         '<div style="flex:1;border:3px solid var(--a1l);padding:20px 18px;display:flex;flex-direction:column;gap:14px">'
-        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;color:var(--mut)">MÁQUINA {i}</span>'
+        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;color:var(--mut)">EXECUTOR {i}</span>'
         '<div style="height:52px;background:var(--a1);display:flex;align-items:center;padding-left:14px;'
         'font-family:Roboto Mono;font-size:24px;color:#071A22">big</div>'
         '<div style="display:flex;align-items:center;gap:12px"><div style="width:30px;height:30px;background:var(--hl)"></div>'
         '<span style="font-family:Roboto Mono;font-size:24px;color:var(--mut)">copia de small</span></div></div>'
     )
     diagram = (
-        '<div style="display:flex;gap:20px;margin-top:36px">' + "".join(node.format(i=i) for i in (1, 2, 3)) + "</div>"
+        '<div style="display:flex;gap:20px;margin-top:28px">' + "".join(node.format(i=i) for i in (1, 2, 3)) + "</div>"
     )
     code = (
-        '<div class="code" style="margin-top:36px;font-size:29px;padding:30px 34px"><span class="k">from</span> pyspark.sql.functions <span class="k">import</span> broadcast\n\n'
+        '<div class="code" style="margin-top:26px;font-size:29px;padding:24px 34px"><span class="k">from</span> pyspark.sql.functions <span class="k">import</span> broadcast\n\n'
         'joined = big.<span class="f">join</span>(<span class="f">broadcast</span>(small), <span class="s">"key"</span>)</div>'
     )
     body = (
         '<div style="margin-top:48px"><div class="kicker">Arreglo 3</div>'
         '<h2>Si la otra tabla es pequeña: <span class="hl">broadcast</span>.</h2>'
-        '<p class="lead" style="margin-top:22px;font-size:32px">Spark copia la tabla pequeña completa a cada máquina. '
+        '<p class="lead" style="margin-top:22px;font-size:32px">Spark copia la tabla pequeña completa a cada executor. '
         'La grande no se mueve: sin shuffle, no hay partición gigante.</p></div>'
         + diagram + code +
-        '<p class="cap" style="font-size:29px;color:var(--mut)">Lo vimos en el <b style="color:#E7F3F1">Día 03</b>. '
-        '<b style="color:#E7F3F1">Ojo:</b> solo si la tabla pequeña cabe de sobra en memoria.</p>'
+        defs([("Executor", "El proceso de Spark que ejecuta las tareas. Un clúster tiene varios.")]) +
+        '<p class="cap" style="font-size:29px;color:var(--mut);margin-top:18px"><b style="color:#E7F3F1">Ojo:</b> la tabla pequeña debe caber en memoria. Más en el Día 03.</p>'
     )
     return slide(5, "dark", body)
 
@@ -228,7 +228,7 @@ def s6() -> str:
     )
     code = (
         '<div class="code" style="margin-top:30px;font-size:26px;padding:26px 30px">'
-        'N = <span class="n">8</span>  <span class="c"># en cuántos pedazos partir la llave</span>\n'
+        'N = <span class="n">8</span>  <span class="c"># en cuántos pedazos partir la key</span>\n'
         '<span class="c"># Grande: cada fila recibe una sal de 0 a N-1</span>\n'
         'big = big.<span class="f">withColumn</span>(\n'
         '    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>))\n'
@@ -239,9 +239,9 @@ def s6() -> str:
     )
     body = (
         '<div style="margin-top:48px"><div class="kicker">Arreglo 4</div>'
-        '<h2>Salting: parte la llave <span class="hl">caliente</span>.</h2>'
+        '<h2>Salting: parte la key <span class="hl">caliente</span>.</h2>'
         '<p class="lead" style="margin-top:20px;font-size:31px">A cada fila le agregas un número al azar, la <b>sal</b>. '
-        'La llave A se vuelve A_0, A_1, A_2... y se reparte en varias tareas.</p></div>'
+        'La key A se vuelve A_0, A_1, A_2... y se reparte en varias tareas.</p></div>'
         f'<div style="margin-top:28px">{before}{after}</div>'
         + code +
         '<p class="cap" style="font-size:29px;margin-top:18px"><b>El costo:</b> la tabla pequeña se copia N veces.</p>'

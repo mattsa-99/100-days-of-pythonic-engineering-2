@@ -25,7 +25,7 @@
 
 ## Antes de publicar
 
-- [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El código de salting es el patrón clásico: ajusta N según el tamaño de la llave caliente.
+- [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El código de salting es el patrón clásico: ajusta N según el tamaño de la key caliente.
 
 ## Post (copiar y pegar)
 
@@ -42,10 +42,10 @@ Casi siempre es data skew: tus datos están mal repartidos y una partición reci
 ✅ Hay spill a disco solo en unas pocas tareas
 
 🛠️ Cómo arreglarlo (de menos a más esfuerzo):
-1️⃣ Filtra las llaves nulas antes del join
+1️⃣ Filtra las keys nulas antes del join
 2️⃣ Verifica que AQE esté activo: spark.sql.adaptive.skewJoin.enabled
 3️⃣ Haz broadcast si la otra tabla es pequeña (Día 3 👆)
-4️⃣ Salting: reparte la llave "caliente" en N pedazos
+4️⃣ Salting: reparte la key "caliente" en N pedazos
 
 N = 8
 big = big.withColumn("salt", (F.rand() * N).cast("int"))

@@ -98,6 +98,11 @@ Los temas pueden ser avanzados, pero el carrusel debe entenderlo alguien que sab
 - **Glosario en línea**: todo término técnico (partición, shuffle, AQE, broadcast, spill...) se define en lenguaje simple, en máximo ~15 palabras, **en la lámina donde aparece por primera vez**, aunque el copy también lo explique. La redundancia es intencional: mucha gente solo ve las láminas.
   - Con el componente `.defs` / `.def` de `theme.css` (término + definición), o dentro del lead o de una línea `.why`.
   - Máximo 2 definiciones por lámina. Si hacen falta más, la lámina tiene demasiadas ideas.
+- **Terminología nativa de Spark**: usa el nombre que aparece en la Spark UI, la documentación o el código, y defínelo una vez. Nunca inventes paráfrasis.
+  - Sí: `executor`, `key` (y "key caliente"), `shuffle`, `stage`, `broadcast`, `spill`, `driver`.
+  - No: "máquina", "llave", "clave", "nodo" usado como sinónimo de executor.
+  - Se mantienen en español las traducciones directas que todos reconocen: tarea, partición, tabla, clúster, job.
+  - Ordena las láminas para que un término no aparezca antes de la lámina que lo define.
 - **Primero el mecanismo, después el código**: la lámina del problema explica *por qué* pasa (ej. el skew existe porque el shuffle junta las filas de la misma llave), con un visual y no solo el nombre del problema.
 - **Código narrado**:
   - Antes de cada bloque, una frase en español dice qué hace y por qué.
