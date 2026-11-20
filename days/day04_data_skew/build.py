@@ -15,8 +15,7 @@ REPO = ROOT.parents[1]
 FONTS = REPO / "design" / "fonts"
 TOTAL = 8
 AUTHOR = "Mateo Soto"
-ROLE = "Data Engineer &middot; Azure + Databricks"
-CREDENTIALS = "Databricks Certified Data Engineer Professional &middot; Entrevistador t&eacute;cnico"
+ROLE = "Data Engineer"
 
 FONT_FILES: list[tuple[str, int, str]] = [
     ("Montserrat", 700, "montserrat-latin-700-normal.woff2"),
@@ -46,8 +45,7 @@ def chrome(idx: int, tone: str, swipe: bool = True) -> str:
     """Shared header, footer and progress bar for a slide."""
     segs = "".join(f'<i class="{"on" if i < idx else ""}"></i>' for i in range(TOTAL))
     cue = '<div class="swipe">Desliza &rarr;</div>' if swipe else ""
-    # The closing slide carries the full author block, so its footer only shows the page.
-    byline = f'<span><b>{AUTHOR}</b> <span class="role">&middot; {ROLE}</span></span>' if swipe else "<span></span>"
+    byline = f'<span><b>{AUTHOR}</b> <span class="role">&middot; {ROLE}</span></span>'
     return (
         f'<div class="top"><span class="day">D&iacute;a 04 / 100</span>'
         f'<span class="lvl">Avanzado</span></div><div class="rule"></div>'
@@ -313,7 +311,6 @@ def s8() -> str:
         '<span class="tag">D&iacute;a 05</span><span style="font-size:36px">repartition() vs coalesce()</span></div>'
         '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule)">'
         '<span class="tag">Repo</span><span style="font-family:Roboto Mono;font-size:28px">github.com/mateosotoa/<br>100-days-of-pythonic-engineering</span></div></div>'
-        f'<div class="author"><b>{AUTHOR}</b><span>{ROLE}</span><span>{CREDENTIALS}</span></div>'
     )
     return slide(8, "dark", body, swipe=False)
 
