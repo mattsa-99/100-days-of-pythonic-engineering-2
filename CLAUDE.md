@@ -277,5 +277,5 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 ## 11. Git
 
 - Proyecto personal: identidad `Mateo Soto` del git config local. Las reglas de identidad de KOF no aplican.
-- Rama `main`. Remoto planeado: `github.com/mateosotoa/100-days-of-pythonic-engineering` (el link que ya sale en los primeros comentarios y en la lámina de cierre), todavía sin crear. No hacer push sin confirmación de Mateo. `gh` no está instalado.
+- Rama `main`. Remoto: `https://github.com/mattsa-99/100-days-of-pythonic-engineering-2` (público). Ese es el link que va en la lámina de cierre y en los primeros comentarios. No hacer push sin confirmación de Mateo. `gh` no está instalado.
 - `preview/` y el HTML generado se versionan junto con el PDF para poder revisar sin volver a renderizar.

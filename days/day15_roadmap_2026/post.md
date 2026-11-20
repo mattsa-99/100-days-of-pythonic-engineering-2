@@ -55,4 +55,4 @@ Guarda este post 📌 y compártelo con alguien que esté empezando.
 
 ## Primer comentario
 
-Repo con todos los scripts y el roadmap: github.com/mateosotoa/100-days-of-pythonic-engineering
+Repo con todos los scripts y el roadmap: github.com/mattsa-99/100-days-of-pythonic-engineering-2

@@ -311,7 +311,7 @@ def s8() -> str:
         '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule)">'
         '<span class="tag">D&iacute;a 05</span><span style="font-size:36px">repartition() vs coalesce()</span></div>'
         '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule)">'
-        '<span class="tag">Repo</span><span style="font-family:Roboto Mono;font-size:28px">github.com/mateosotoa/<br>100-days-of-pythonic-engineering</span></div></div>'
+        '<span class="tag">Repo</span><span style="font-family:Roboto Mono;font-size:28px">github.com/mattsa-99/<br>100-days-of-pythonic-engineering-2</span></div></div>'
     )
     return slide(8, "dark", body, swipe=False)
 

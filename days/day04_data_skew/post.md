@@ -65,4 +65,4 @@ Sígueme para el Día 5/100 📌
 
 ## Primer comentario
 
-Documentación oficial de ajuste de rendimiento en Spark SQL: https://spark.apache.org/docs/latest/sql-performance-tuning.html  |  Repo: github.com/mateosotoa/100-days-of-pythonic-engineering
+Documentación oficial de ajuste de rendimiento en Spark SQL: https://spark.apache.org/docs/latest/sql-performance-tuning.html  |  Repo: github.com/mattsa-99/100-days-of-pythonic-engineering-2
