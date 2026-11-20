@@ -18,14 +18,14 @@
 
 - 1. Portada (oscura): la noticia como problema que resuelve + visual
 - 2. Qué es (clara): explicación en lenguaje simple + definiciones (sección 4.1)
-- 3. Ejemplo real (oscura): antes / después con código o configuración
+- 3. Ejemplo real en pantalla (oscura): un caso concreto con código/SQL narrado, configuración o antes / después con filas. Es el centro de la pieza (en imagen única, al menos un tercio de la lámina)
 - 4. Disponibilidad y cuándo usarlo (clara): Preview o GA, nubes, requisitos
 - 5. Cierre (oscuro): pregunta + GUARDA / PRÓXIMA SEMANA / REPO
 
 ## Antes de publicar
 
 - [ ] VERIFICAR: la noticia y su estado (Preview/GA) contra la fuente oficial, el mismo día de publicar.
-- [ ] VERIFICAR: el ejemplo (`example.py` / `example.sql`) contra la documentación oficial o probado en un workspace.
+- [ ] VERIFICAR: el ejemplo de la lámina (sintaxis, nombres, parámetros) contra la documentación oficial o probado en un workspace.
 - [ ] Completa o borra la línea `[TU ANÉCDOTA: ...]`.
 
 ## Post (copiar y pegar)
