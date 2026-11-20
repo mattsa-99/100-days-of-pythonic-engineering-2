@@ -83,6 +83,18 @@ N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARD
 **Firma y serie**: constantes `AUTHOR = "Mateo Soto"`, `ROLE = "Data Engineer"` y `SERIES = "Pythonic Engineering"` al inicio de `build.py`. Firma en el pie y serie en la cabecera de todas las láminas. El nombre completo ("100 Days of Pythonic Engineering") no cabe junto a la píldora de nivel: el `/ 100` ya lo comunica. No agregar más (ni stack, ni certificaciones, ni bloque de autor): Mateo lo prefiere así.
 - La credibilidad viene del contenido: experiencia propia dentro del post ("lo he visto en...", "en entrevistas técnicas..."). Nunca se inventa: se deja `[TU ANÉCDOTA: ...]` en el copy para que Mateo la complete.
 
+**Formatos alternativos**:
+- Imagen única: el mismo lienzo y la misma cabecera y pie, sin barra de progreso ni "Desliza".
+- Infografía animada (opcional): mismas paletas y fuentes; las animaciones solo se permiten en líneas conectoras (`stroke-dashoffset`).
+  - LinkedIn no reproduce HTML ni SVG animados: lo que se sube es un **video MP4** (o GIF). Verificar formatos y límites de tamaño vigentes antes de publicar.
+  - Entregables en `days/dayNN_slug/`: `dayNN_slug.png` (versión estática, **siempre**) y `dayNN_slug.mp4` (solo si la animación aporta). El `build.py` genera el HTML con la animación; el MP4 se graba de ese HTML.
+  - En esta máquina no hay `ffmpeg` ni Playwright: para grabar el MP4 hay que instalar `ffmpeg` (`brew install ffmpeg`) y decidirlo con Mateo antes de construirlo.
+- "Ventana macOS" del plan V3 (días 10 y 12): se resuelve como carrusel corto Antes/Después con bloques `.code` del tema, sin los tres puntos de ventana ni sombras.
+
+**Límites prácticos para que nada se desborde** (aprendidos al renderizar):
+- Código a 29 px dentro de `.code`: máximo unos 48 caracteres por línea; a 26 px, unos 54. Parte las líneas largas en lugar de bajar de 26 px.
+- Como máximo 2 bloques de código por lámina.
+
 ---
 
 ## 4.1 Claridad: avanzado, pero accesible para todos (obligatorio)

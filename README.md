@@ -18,9 +18,9 @@ Cada día tiene su carpeta en [`days/`](days/) con el post listo para copiar, el
 | 03 | [Broadcast Join vs Shuffle Join](days/day03_broadcast_join/) | Errores | Post de texto | Texto | ✅ Publicado | antes del repo | [post](https://lnkd.in/p/emV3d4gM) |
 | 04 | [Data Skew en Spark](days/day04_data_skew/) | Errores que cuestan plata | Carrusel | PDF, 8 láminas: [`day04_data_skew.pdf`](days/day04_data_skew/day04_data_skew.pdf) | 🎨 Listo | — | — |
 | 05 | [repartition() vs coalesce()](days/day05_repartition_vs_coalesce/) | Pregunta de entrevista | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
-| 06 | [ZORDER vs Liquid Clustering](days/day06_zorder_vs_liquid_clustering/) | Opinión / Debate | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
-| 07 | [Medallion: 5 errores comunes](days/day07_medallion_mistakes/) | Arquitectura en una imagen | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
-| 08 | [Auto Loader vs COPY INTO](days/day08_auto_loader_vs_copy_into/) | Errores que cuestan plata | Infografía | PNG imagen única (por hacer) | ⏳ Pendiente | — | — |
+| 06 | [ZORDER vs Liquid Clustering](days/day06_zorder_vs_liquid_clustering/) | Opinión / Debate | Infografía | PNG imagen única + MP4 si lleva animación (por decidir) | ⏳ Pendiente | — | — |
+| 07 | [Medallion: 5 errores comunes](days/day07_medallion_mistakes/) | Arquitectura en una imagen | Infografía | PNG imagen única + MP4 si lleva animación (por decidir) | ⏳ Pendiente | — | — |
+| 08 | [Auto Loader vs COPY INTO](days/day08_auto_loader_vs_copy_into/) | Errores que cuestan plata | Infografía | PNG imagen única + MP4 si lleva animación (por decidir) | ⏳ Pendiente | — | — |
 | 09 | [SCD Tipo 2 con MERGE](days/day09_scd2_merge/) | Arquitectura en una imagen | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
 | 10 | [Generadores y yield](days/day10_generators_yield/) | Antes vs. Después | Carrusel corto / imagen | PDF o PNG (por decidir) | ⏳ Pendiente | — | — |
 | 11 | [5 checks de calidad antes de Silver](days/day11_data_quality_checks/) | Guardable | Carrusel | PDF (por hacer) | ⏳ Pendiente | — | — |
