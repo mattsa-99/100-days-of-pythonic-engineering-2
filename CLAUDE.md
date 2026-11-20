@@ -70,7 +70,7 @@ Reglas:
 **Estructura fija de cada lámina** (ya implementada en `chrome()` del ejemplo):
 - Cabecera: `DÍA NN / 100` a la izquierda y la píldora de nivel (`BÁSICO`, `INTERMEDIO`, `AVANZADO`) a la derecha, con una línea fina debajo.
 - Kicker de 1 a 3 palabras (ej. `ARREGLO 3`), titular y contenido.
-- Pie: `Mateo Soto` a la izquierda y `NN / TT` en Roboto Mono a la derecha.
+- Pie: `Mateo Soto · Data Engineer · Azure + Databricks` a la izquierda (nombre en Montserrat, rol en Roboto atenuado) y `NN / TT` en Roboto Mono a la derecha. En el cierre, el pie solo muestra `NN / TT`.
 - Barra de progreso segmentada en el borde inferior.
 - `DESLIZA →` en todas las láminas menos la última.
 
@@ -78,7 +78,13 @@ Reglas:
 1. **Portada (oscura)**: hook en forma de problema concreto y un visual que lo demuestre (gráfico, diagrama). Nada de portadas solo con texto.
 2. **El problema**: qué es, explicado en una frase y un visual.
 3. a N-1. **Contenido**: una idea por lámina; si hay código, como máximo 8 líneas por lámina.
-N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARDA`, `DÍA NN+1` y `REPO`.
+N. **Cierre (oscuro)**: pregunta para comentar, tres filas con etiquetas `GUARDA`, `DÍA NN+1` y `REPO`, y debajo el bloque de autor (`.author`): nombre, rol y credenciales.
+
+**Firma y credibilidad** (constantes `AUTHOR`, `ROLE` y `CREDENTIALS` al inicio de `build.py`; copiarlas igual en cada día):
+- `ROLE` = `Data Engineer · Azure + Databricks` → en el pie de todas las láminas: quién habla y desde qué experiencia.
+- `CREDENTIALS` = `Databricks Certified Data Engineer Professional · Entrevistador técnico` → solo en el cierre, que es donde la gente decide si te sigue. No repetirlas en cada lámina.
+- Si cambia un rol o una certificación, se cambia en las constantes y se vuelve a renderizar.
+- La credibilidad más fuerte es la experiencia propia dentro del contenido ("lo he visto en...", "en entrevistas técnicas..."). Nunca se inventa: se deja `[TU ANÉCDOTA: ...]` en el copy para que Mateo la complete.
 
 **Formatos alternativos**:
 - Imagen única: el mismo lienzo y la misma cabecera y pie, sin barra de progreso ni "Desliza".

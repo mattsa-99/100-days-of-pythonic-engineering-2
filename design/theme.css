@@ -79,3 +79,8 @@ p.lead{font-size:38px;line-height:1.36;font-weight:400}
 .step{display:flex;gap:18px;align-items:baseline;font-family:'Montserrat';font-weight:800;font-size:36px;line-height:1.15}
 .step .n{font-weight:900;color:var(--acc);font-size:40px}
 .why{font-size:30px;line-height:1.38;color:var(--mut);margin:12px 0 22px}
+
+/* autor: rol en el pie y credenciales en el cierre */
+.foot .role{font-weight:500;color:var(--mut)}
+.author{margin-top:40px;display:flex;flex-direction:column;gap:6px;font-size:26px;line-height:1.35;color:var(--mut)}
+.author b{font-family:'Montserrat';font-weight:800;font-size:30px;color:var(--acc);letter-spacing:.02em}

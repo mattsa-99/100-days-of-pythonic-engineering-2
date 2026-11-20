@@ -14,6 +14,9 @@ ROOT = Path(__file__).parent
 REPO = ROOT.parents[1]
 FONTS = REPO / "design" / "fonts"
 TOTAL = 8
+AUTHOR = "Mateo Soto"
+ROLE = "Data Engineer &middot; Azure + Databricks"
+CREDENTIALS = "Databricks Certified Data Engineer Professional &middot; Entrevistador t&eacute;cnico"
 
 FONT_FILES: list[tuple[str, int, str]] = [
     ("Montserrat", 700, "montserrat-latin-700-normal.woff2"),
@@ -43,11 +46,13 @@ def chrome(idx: int, tone: str, swipe: bool = True) -> str:
     """Shared header, footer and progress bar for a slide."""
     segs = "".join(f'<i class="{"on" if i < idx else ""}"></i>' for i in range(TOTAL))
     cue = '<div class="swipe">Desliza &rarr;</div>' if swipe else ""
+    # The closing slide carries the full author block, so its footer only shows the page.
+    byline = f'<span><b>{AUTHOR}</b> <span class="role">&middot; {ROLE}</span></span>' if swipe else "<span></span>"
     return (
         f'<div class="top"><span class="day">D&iacute;a 04 / 100</span>'
         f'<span class="lvl">Avanzado</span></div><div class="rule"></div>'
         f'{cue}'
-        f'<div class="foot"><b>Mateo Soto</b><span class="num">{idx:02d} / {TOTAL:02d}</span></div>'
+        f'<div class="foot">{byline}<span class="num">{idx:02d} / {TOTAL:02d}</span></div>'
         f'<div class="prog">{segs}</div>'
     )
 
@@ -302,12 +307,13 @@ def s8() -> str:
         '<h1 style="font-size:96px">&iquest;Cu&aacute;l ha sido tu peor caso de <span class="hl">skew</span>?</h1>'
         '<p class="lead" style="margin-top:34px;color:var(--mut)">Cu&eacute;ntalo en los comentarios.</p></div>'
         '<div style="margin-top:56px;display:flex;flex-direction:column;gap:0">'
-        '<div style="display:flex;gap:26px;align-items:center;padding:36px 0;border-top:2px solid var(--rule)">'
+        '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule)">'
         '<span class="tag">Guarda</span><span style="font-size:36px">Para tu pr&oacute;ximo job lento.</span></div>'
-        '<div style="display:flex;gap:26px;align-items:center;padding:36px 0;border-top:2px solid var(--rule)">'
+        '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule)">'
         '<span class="tag">D&iacute;a 05</span><span style="font-size:36px">repartition() vs coalesce()</span></div>'
-        '<div style="display:flex;gap:26px;align-items:center;padding:36px 0;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule)">'
+        '<div style="display:flex;gap:26px;align-items:center;padding:26px 0;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule)">'
         '<span class="tag">Repo</span><span style="font-family:Roboto Mono;font-size:28px">github.com/mateosotoa/<br>100-days-of-pythonic-engineering</span></div></div>'
+        f'<div class="author"><b>{AUTHOR}</b><span>{ROLE}</span><span>{CREDENTIALS}</span></div>'
     )
     return slide(8, "dark", body, swipe=False)
 
