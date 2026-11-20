@@ -47,6 +47,8 @@
 
 Si le sirve a alguien de tu equipo, compártelo ♻️
 
+<Opcional, una línea: También esta semana: <otra noticia sólida>. Si no hubo, borra esta línea.>
+
 Databricks esta semana · Semana SS. Sígueme para la serie 100 Days of Pythonic Engineering.
 
 #Databricks <#HashtagDelRol> #100DaysOfPythonicEngineering

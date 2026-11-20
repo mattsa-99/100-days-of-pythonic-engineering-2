@@ -17,6 +17,14 @@ Serie paralela a los 100 días: **una noticia de Databricks por semana**, la má
 Estado en Databricks: `Public Preview`, `GA` o `Beta`, según la fuente oficial.
 Estados del post: ⏳ Pendiente → 🎨 Listo → ✅ Publicado.
 
+## Reserva
+
+Noticias sólidas que no ganaron su semana. Se usan en una semana floja o como tema de la serie. Se borran si pasan de 6 semanas o ya se publicaron.
+
+| Semana en que apareció | Noticia | Fuente oficial | Estado en Databricks | Rol |
+|---|---|---|---|---|
+| | | | | |
+
 ## Métricas
 
 | Semana | Publicado (día y hora) | Impresiones | Guardados | Comentarios | Reacciones | Notas |
