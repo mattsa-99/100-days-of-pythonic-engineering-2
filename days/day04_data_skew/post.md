@@ -27,7 +27,7 @@
 ## Antes de publicar
 
 - [ ] Completa o borra la línea `[TU ANÉCDOTA: ...]` del post.
-- [ ] Publicar martes, miércoles o jueves entre 9:00 y 11:00 a.m. hora Colombia, y anotar día y hora en la tabla de Métricas.
+- [ ] Publicar el martes 24 de noviembre a las 9:00 a.m. hora Colombia, y anotar día y hora en la tabla de Métricas.
 - [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El salting usa N = 4 para coincidir con el ejemplo de las láminas; en un caso real ajusta N según el tamaño de la key caliente.
 
 ## Post (copiar y pegar)

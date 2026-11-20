@@ -7,6 +7,8 @@ Cada día tiene su carpeta en [`days/`](days/) con el post listo para copiar, el
 
 ## Dónde vamos
 
+**Ritmo:** 2 posts por semana, martes y jueves a las 9:00 a.m. hora Colombia.
+
 **Último publicado:** Día 03 · **Siguiente:** Día 04 (Data Skew, PDF de 8 láminas listo en [`days/day04_data_skew/`](days/day04_data_skew/))
 
 ## Tabla de seguimiento

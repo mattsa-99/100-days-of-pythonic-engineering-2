@@ -204,10 +204,10 @@ Reglas:
 
 **Por qué este formato** (revisión del 19 nov 2026): se analizaron posts públicos de Zach Wilson y de una creadora de Data con 83k seguidores. Patrones: hook directo sin etiquetas, listas numeradas `Término → explicación`, entre 0 y 3 emojis, 0 o 1 hashtag, sin código en el cuerpo, y los posts personales con más reacciones. La muestra es pequeña (4 posts): se valida con la tabla de Métricas en la revisión del Día 08.
 
-**Cuándo publicar** (punto de partida, a ajustar con las métricas propias):
-- **Martes, miércoles y jueves, entre 9:00 y 11:00 a.m. hora Colombia** (8:00 a 10:00 hora CDMX) para los posts fuertes (carruseles, GIF).
-- Lunes y viernes para los posts más ligeros (opinión, texto). Evitar sábado y domingo.
-- Nunca dos posts con menos de 12 horas de diferencia.
+**Cuándo publicar** (decidido por Mateo el 19 nov 2026; ajustar con las métricas propias):
+- **2 posts por semana: martes y jueves a las 9:00 a.m. hora Colombia** (8:00 a.m. hora CDMX). Máximo 2 por semana.
+- Los dos días están en la mejor ventana de los estudios (martes a jueves por la mañana) y separados por un día, para que un post no le quite alcance al otro.
+- Evitar fines de semana y festivos (ej. 8 de diciembre en Colombia; 24, 25 y 31 de diciembre, y 1 de enero): ese día se salta al siguiente martes o jueves.
 - Anotar día y hora real de cada post en la tabla de Métricas del README para comparar después.
 
 **Formato de `post.md`**:
