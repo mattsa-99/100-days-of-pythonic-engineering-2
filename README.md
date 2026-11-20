@@ -58,6 +58,7 @@ days/day_XX_<tema>/
 ├── *.py / *.sql     # código del snippet, completo y con tipado
 └── carousel/        # HTML fuente + PDF (cuando el formato es carrusel)
 tools/render_carousel.sh   # HTML → PDF 1080x1350 con Chrome headless
+tools/preview_pdf.swift    # PDF → PNG por página para revisar el carrusel
 ```
 
 ## Reglas de código
