@@ -26,6 +26,7 @@
 
 ## Antes de publicar
 
+- [ ] Claridad del copy (CLAUDE.md 4.1 y 6): definir en pocas palabras AQE, broadcast y salting la primera vez que aparecen.
 - [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El código de salting es el patrón clásico: ajusta N según el tamaño de la key caliente.
 
 ## Post (copiar y pegar)

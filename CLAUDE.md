@@ -91,30 +91,64 @@ N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARD
 
 ---
 
-## 4.1 Accesible para todos (obligatorio)
+## 4.1 Claridad: avanzado, pero accesible para todos (obligatorio)
 
-Los temas pueden ser avanzados, pero el carrusel debe entenderlo alguien que sabe SQL y nunca ha usado Spark. Sin agregar láminas:
+El tema puede ser avanzado, pero **el carrusel lo debe entender alguien que sabe SQL y nunca ha usado Spark ni Databricks**, sin que el carrusel se infle (máximo 8 láminas). Mucha gente solo ve las láminas y no lee el copy, así que cada lámina se explica sola.
 
-- **Glosario en línea**: todo término técnico (partición, shuffle, AQE, broadcast, spill...) se define en lenguaje simple, en máximo ~15 palabras, **en la lámina donde aparece por primera vez**, aunque el copy también lo explique. La redundancia es intencional: mucha gente solo ve las láminas.
-  - Con el componente `.defs` / `.def` de `theme.css` (término + definición), o dentro del lead o de una línea `.why`.
-  - Máximo 2 definiciones por lámina. Si hacen falta más, la lámina tiene demasiadas ideas.
-- **Terminología nativa de Spark**: usa el nombre que aparece en la Spark UI, la documentación o el código, y defínelo una vez. Nunca inventes paráfrasis.
-  - Sí: `executor`, `key` (y "key caliente"), `shuffle`, `stage`, `broadcast`, `spill`, `driver`.
-  - No: "máquina", "llave", "clave", "nodo" usado como sinónimo de executor.
-  - Se mantienen en español las traducciones directas que todos reconocen: tarea, partición, tabla, clúster, job.
-  - Ordena las láminas para que un término no aparezca antes de la lámina que lo define.
-- **Primero el mecanismo, después el código**: la lámina del problema explica *por qué* pasa (ej. el skew existe porque el shuffle junta las filas de la misma llave), con un visual y no solo el nombre del problema.
-- **Código narrado**:
-  - Antes de cada bloque, una frase en español dice qué hace y por qué.
-  - En el snippet de la lámina, los comentarios van en español y narran los pasos (`# Grande: cada fila recibe una sal`). `example.py` sigue en inglés.
-  - Nada de variables auxiliares que no aporten (ej. `conf = spark.conf`).
-- **Técnicas poco conocidas (salting, SCD2, MERGE, bucketing...)**: dos láminas en vez de una.
-  - Lámina de la idea: un ejemplo con filas reales en mini tablas (ver `mini_table()` del Día 04), en pasos numerados y con el resultado ("Antes: ... Ahora: ..."). Sin código.
-  - Lámina del código: los mismos pasos numerados, cada uno con una frase de qué hace la función menos obvia (ej. `rand()`, `explode`). Usa los mismos valores que el ejemplo (si el ejemplo tiene salts 0 a 3, `N = 4`).
-- **Antes / Después** cuando una técnica transforma datos (ej. `ANTES: A · 1 tarea` → `DESPUÉS: A_0 A_1 A_2 A_3`).
-- **Prueba final por lámina**: ¿alguien que no conoce el término entendería qué pasa y por qué importa? Si no, falta una definición o un visual.
+### 1. Define cada término donde aparece
 
-Referencia: `days/day04_data_skew/build.py` (láminas 2, 3, 4 y 6) y su helper `defs()`.
+- Todo término técnico (partición, shuffle, executor, AQE, broadcast, spill, Delta, Unity Catalog...) se define en lenguaje simple, en máximo ~15 palabras, **en la lámina donde aparece por primera vez**. Aunque el copy también lo explique: la redundancia es intencional.
+- Cómo: componente `.defs` / `.def` de `theme.css` (término + definición), dentro del lead, o en una línea `.why`.
+- Máximo 2 definiciones por lámina. Si hacen falta más, la lámina tiene demasiadas ideas.
+- Ordena las láminas para que ningún término aparezca antes de la lámina que lo define. Si una definición introduce otro término, reescríbela sin él (ej. shuffle = "mover filas por la red", sin mencionar executors todavía).
+- Las métricas y señales también se explican: no basta "Shuffle Read enorme", hay que decir qué es el Shuffle Read.
+
+### 2. Usa el lenguaje técnico nativo, nunca paráfrasis
+
+Usa el nombre exacto que aparece en la Spark UI, la documentación oficial vigente de Databricks o Azure, o el código. Defínelo una vez y úsalo igual en todo el carrusel y en el copy.
+
+| Ámbito | Sí (nombre nativo) | No (paráfrasis) |
+|---|---|---|
+| Spark | `executor`, `driver`, `key`, "key caliente", `shuffle`, `stage`, `broadcast`, `spill`, `salt` | "máquina", "llave", "clave", "nodo" como sinónimo de executor, "sal" |
+| Databricks | Delta Lake / tabla Delta, Unity Catalog, `catalog.schema.table`, Auto Loader, notebook, workspace, cluster, SQL warehouse, Liquid Clustering, `OPTIMIZE`, `MERGE` | "base de datos de Databricks", "cargador automático", "el catálogo de datos" |
+| Azure | storage account, container, ADLS Gen2, Managed Identity, service principal, Key Vault, RBAC | "cuenta de almacenamiento genérica", "usuario de la app", "la bóveda" |
+
+- Se mantienen en español las traducciones directas que todos reconocen: tarea, partición, tabla, clúster, job, columna, fila.
+- Nombres de productos tal como los escribe la documentación vigente (mayúsculas incluidas). Si un producto cambió de nombre, usa el actual y verifícalo (`VERIFICAR:` en `post.md`).
+- Si una palabra es ambigua, acláralo. Ej. una "task" de un Job de Databricks no es lo mismo que una tarea de Spark.
+
+### 3. Primero el mecanismo, después la solución
+
+- La lámina del problema explica *por qué* pasa, con un visual, no solo cómo se llama (ej. el skew existe porque el shuffle junta en una partición todas las filas de la misma key).
+- Cada arreglo dice en una frase por qué funciona antes de mostrar cómo se hace.
+
+### 4. Técnicas poco conocidas: dos láminas, con un ejemplo de verdad
+
+Para técnicas que la mayoría no ha usado (salting, SCD Tipo 2, MERGE con varias condiciones, bucketing, watermarks, Z-order...):
+
+- **Lámina de la idea, sin código**: un ejemplo con filas reales en mini tablas (`mini_table()` del Día 04), en pasos numerados (1, 2, 3), y una línea final con el resultado: "Antes: ... Ahora: ...".
+- **Lámina del código**: los mismos pasos con el mismo número, cada uno con una frase que explica la función menos obvia (ej. "`rand()` da un número entre 0 y 1", "`explode` convierte la lista en filas") y al final el costo o la advertencia.
+- Los valores del código coinciden con los del ejemplo (si el ejemplo usa salts 0 a 3, el código usa `N = 4`).
+- Las técnicas conocidas (filtrar nulos, activar una config) caben en una lámina, con una frase de por qué.
+
+### 5. Código narrado
+
+- Antes de cada bloque, una frase en español dice qué hace y por qué.
+- En el snippet de la lámina, los comentarios van en español y narran los pasos (`# Grande: cada fila recibe un salt al azar`). `example.py` sigue en inglés.
+- Nada de variables auxiliares ni atajos que no aporten (ej. `conf = spark.conf`). El código de la lámina se escribe para leerse, no para ahorrar caracteres.
+- Nombres de ejemplo que se entiendan solos: `big`, `small`, `events`, `customer_id`.
+
+### 6. Visuales que explican
+
+- Antes / Después cuando una técnica transforma datos (ej. `ANTES: A · 1 tarea con todo` → `DESPUÉS: A·0 A·1 A·2 A·3`).
+- Diagramas con nombres nativos en las cajas (`EXECUTOR 1`, no "Máquina 1") y contenido rotulado ("copia de small").
+- Datos ilustrativos marcados como `Ilustrativo`.
+
+### Prueba final por lámina
+
+¿Alguien que sabe SQL pero no conoce el término entendería qué pasa, por qué pasa y por qué le importa? Si no, falta una definición, un ejemplo o un visual.
+
+Referencia: `days/day04_data_skew/build.py`. Láminas 2 y 3 (definiciones), 4 (arreglos con su porqué), 5 (diagrama con executors), 6 y 7 (técnica poco conocida en dos láminas). Helpers `defs()` y `mini_table()`.
 
 ---
 
@@ -157,6 +191,7 @@ Reglas:
 - Entre 700 y 2,000 caracteres.
 - Nunca inventes anécdotas, cifras o experiencias de Mateo. Si el post necesita una, deja `[TU ANÉCDOTA: ...]`.
 - Nunca menciones clientes, empresas ni datos de proyectos reales.
+- **Claridad también en el copy**: la primera vez que aparece un término técnico clave, defínelo en pocas palabras entre paréntesis o en la misma frase (ej. "AQE (Adaptive Query Execution): Spark divide sola las particiones gigantes"). Mismo vocabulario nativo que las láminas (sección 4.1).
 
 **Formato de `post.md`**:
 1. `# Día NN: <tema>`
@@ -236,7 +271,8 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 - [ ] Portada oscura con un visual; cierre oscuro con pregunta, `GUARDA`, `DÍA NN+1` y `REPO`.
 - [ ] Ninguna lámina con texto cortado, código desbordado o fuente menor de 24 px (revisado en PNG).
 - [ ] Nada de la lista de prohibidos de la sección 5.
-- [ ] Cada término técnico está definido en la lámina donde aparece por primera vez, y cada bloque de código va precedido de una frase que dice qué hace (sección 4.1).
+- [ ] Sección 4.1: cada término definido en la lámina donde aparece primero, nombres nativos de Spark/Databricks/Azure (sin paráfrasis), técnicas poco conocidas en dos láminas con ejemplo de filas, y cada bloque de código precedido de una frase que dice qué hace.
+- [ ] El copy define los términos clave la primera vez que aparecen.
 - [ ] El copy sigue la estructura de la sección 6, sin links en el cuerpo, entre 700 y 2,000 caracteres.
 - [ ] El código fue verificado contra la documentación oficial, o quedó marcado como `VERIFICAR:`.
 - [ ] La tabla de seguimiento del `README.md` y el `post.md` quedaron actualizados.
