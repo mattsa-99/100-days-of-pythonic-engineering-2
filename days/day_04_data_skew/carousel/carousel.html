@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Día 4 · Data Skew</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1080px 1350px; margin: 0; }
+  :root {
+    --bg: #0b1220; --panel: #121b2e; --line: #23304a;
+    --text: #e8edf6; --muted: #93a1bc;
+    --yellow: #ffd43b; --blue: #4b8bbe; --red: #ff5d5d; --green: #3ddc97;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body { font-family: "Inter", system-ui, sans-serif; color: var(--text); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide {
+    width: 1080px; height: 1350px; padding: 96px 88px 80px; position: relative; overflow: hidden;
+    page-break-after: always; break-after: page; display: flex; flex-direction: column;
+    background:
+      radial-gradient(900px 600px at 110% -10%, rgba(75,139,190,.22), transparent 60%),
+      radial-gradient(700px 500px at -20% 110%, rgba(255,212,59,.10), transparent 60%),
+      var(--bg);
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .top { display: flex; justify-content: space-between; align-items: center; font-size: 26px; color: var(--muted); font-weight: 600; }
+  .tag { color: var(--yellow); letter-spacing: .04em; }
+  .num { font-family: "JetBrains Mono", monospace; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-size: 24px; color: var(--muted); }
+  .swipe { color: var(--yellow); font-weight: 700; }
+  h1 { font-size: 100px; line-height: 1.02; font-weight: 900; letter-spacing: -.02em; }
+  h2 { font-size: 68px; line-height: 1.08; font-weight: 800; letter-spacing: -.01em; margin: 56px 0 28px; }
+  p.lead { font-size: 36px; line-height: 1.4; color: var(--muted); }
+  .y { color: var(--yellow); } .r { color: var(--red); } .g { color: var(--green); } .b { color: var(--blue); }
+  .card { background: var(--panel); border: 2px solid var(--line); border-radius: 28px; padding: 40px 44px; }
+  .list { display: flex; flex-direction: column; gap: 26px; margin-top: 12px; }
+  .item { display: flex; gap: 28px; align-items: flex-start; }
+  .badge { flex: none; width: 72px; height: 72px; border-radius: 20px; display: grid; place-items: center; font-size: 36px; font-weight: 900; background: var(--yellow); color: var(--bg); }
+  .item h3 { font-size: 38px; font-weight: 800; margin-bottom: 8px; }
+  .item p { font-size: 30px; line-height: 1.4; color: var(--muted); }
+  code, .mono { font-family: "JetBrains Mono", monospace; }
+  .inline { font-family: "JetBrains Mono", monospace; font-size: .86em; background: #1b2740; padding: 2px 10px; border-radius: 8px; color: var(--yellow); }
+  /* macOS code window */
+  .win { background: #0f1626; border: 2px solid var(--line); border-radius: 24px; overflow: hidden; }
+  .bar { display: flex; gap: 12px; padding: 22px 26px; background: #151f33; align-items: center; }
+  .dot { width: 18px; height: 18px; border-radius: 50%; }
+  .bar span.fn { margin-left: 16px; font-family: "JetBrains Mono", monospace; color: var(--muted); font-size: 22px; }
+  pre { font-family: "JetBrains Mono", monospace; font-size: 29px; line-height: 1.55; padding: 34px 36px 40px; color: #d6deeb; white-space: pre; }
+  .k { color: #c792ea; } .s { color: #c3e88d; } .n { color: #f78c6c; } .f { color: #82aaff; } .c { color: #637777; font-style: italic; }
+  /* bars */
+  .bars { display: flex; gap: 34px; align-items: flex-end; height: 560px; padding: 0 20px; }
+  .col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 18px; height: 100%; justify-content: flex-end; }
+  .bar-fill { width: 100%; border-radius: 18px 18px 8px 8px; background: linear-gradient(180deg, var(--blue), #2f5f86); }
+  .bar-fill.hot { background: linear-gradient(180deg, var(--red), #a82f2f); }
+  .col .lbl { font-family: "JetBrains Mono", monospace; font-size: 26px; color: var(--muted); }
+  .col .val { font-size: 30px; font-weight: 800; }
+  .callout { margin-top: 40px; font-size: 34px; line-height: 1.4; border-left: 8px solid var(--yellow); padding: 6px 0 6px 30px; }
+  .cover-emoji { font-size: 150px; margin: 70px 0 30px; }
+  .pill { display: inline-block; font-size: 28px; font-weight: 700; padding: 12px 26px; border-radius: 999px; border: 2px solid var(--yellow); color: var(--yellow); margin-bottom: 24px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="slide">
+  <div class="top"><span class="tag">🐍 PYTHONIC DATA ENGINEERING</span><span class="num">Día 4/100</span></div>
+  <div class="cover-emoji">🐢</div>
+  <span class="pill" style="align-self:flex-start">Errores que cuestan plata</span>
+  <h1>¿Tu job espera una hora por <span class="y">UNA</span> sola tarea?</h1>
+  <p class="lead" style="margin-top:40px">Casi siempre es <b style="color:var(--text)">data skew</b>. Cómo detectarlo y 4 formas de arreglarlo.</p>
+  <div class="foot"><span>Spark · Databricks</span><span class="swipe">Desliza →</span></div>
+</section>
+
+<!-- 2. What is skew -->
+<section class="slide">
+  <div class="top"><span class="tag">QUÉ ES</span><span class="num">2/7</span></div>
+  <h2>Una partición recibe <span class="r">mucho más</span> que las demás</h2>
+  <div class="bars" style="margin-top:30px">
+    <div class="col"><span class="val">2 min</span><div class="bar-fill" style="height:14%"></div><span class="lbl">part 0</span></div>
+    <div class="col"><span class="val">3 min</span><div class="bar-fill" style="height:18%"></div><span class="lbl">part 1</span></div>
+    <div class="col"><span class="val r">58 min</span><div class="bar-fill hot" style="height:92%"></div><span class="lbl">part 2</span></div>
+    <div class="col"><span class="val">2 min</span><div class="bar-fill" style="height:13%"></div><span class="lbl">part 3</span></div>
+  </div>
+  <div class="callout">Todo el stage espera a la tarea más lenta. Tu cluster tiene 200 cores y <span class="y">199 están de brazos cruzados</span>. 😴</div>
+  <div class="foot"><span>Causa típica: una llave "caliente" (o muchos nulos)</span><span class="swipe">→</span></div>
+</section>
+
+<!-- 3. Detect -->
+<section class="slide">
+  <div class="top"><span class="tag">CÓMO DETECTARLO</span><span class="num">3/7</span></div>
+  <h2>3 señales en la <span class="b">Spark UI</span></h2>
+  <div class="list">
+    <div class="item"><div class="badge">1</div><div><h3>Una tarea dura 10x la mediana</h3><p>En Stages → Summary Metrics, compara <span class="inline">Max</span> contra <span class="inline">Median</span> de Duration.</p></div></div>
+    <div class="item"><div class="badge">2</div><div><h3>Shuffle Read gigante en esa tarea</h3><p>Una sola tarea lee GBs mientras el resto lee MBs.</p></div></div>
+    <div class="item"><div class="badge">3</div><div><h3>Spill a disco en pocas tareas</h3><p>Memoria y disco solo se llenan donde cae la llave caliente.</p></div></div>
+  </div>
+  <div class="win" style="margin-top:44px">
+    <div class="bar"><i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i><i class="dot" style="background:#28c840"></i><span class="fn">find_hot_keys.py</span></div>
+<pre>df.<span class="f">groupBy</span>(<span class="s">"key"</span>).<span class="f">count</span>() \
+  .<span class="f">orderBy</span>(F.<span class="f">desc</span>(<span class="s">"count"</span>)).<span class="f">show</span>(<span class="n">10</span>)</pre>
+  </div>
+  <div class="foot"><span></span><span class="swipe">→</span></div>
+</section>
+
+<!-- 4. Fix 1 & 2 -->
+<section class="slide">
+  <div class="top"><span class="tag">CÓMO ARREGLARLO · MENOS ESFUERZO</span><span class="num">4/7</span></div>
+  <h2 style="margin-top:44px">Fix 1 y 2: lo <span class="g">gratis</span> primero</h2>
+  <div class="card" style="margin-bottom:28px">
+    <div class="item"><div class="badge">1</div><div><h3>Filtra las llaves nulas antes del join</h3><p>Los nulos nunca hacen match, pero sí terminan juntos en una sola partición.</p></div></div>
+  </div>
+  <div class="win" style="margin-bottom:40px">
+    <div class="bar"><i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i><i class="dot" style="background:#28c840"></i></div>
+<pre>big = big.<span class="f">filter</span>(F.<span class="f">col</span>(<span class="s">"key"</span>).<span class="f">isNotNull</span>())</pre>
+  </div>
+  <div class="card" style="margin-bottom:28px">
+    <div class="item"><div class="badge">2</div><div><h3>Verifica que AQE esté activo</h3><p>Adaptive Query Execution parte las particiones sesgadas en el join automáticamente.</p></div></div>
+  </div>
+  <div class="win">
+    <div class="bar"><i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i><i class="dot" style="background:#28c840"></i></div>
+<pre>spark.conf.<span class="f">get</span>(
+    <span class="s">"spark.sql.adaptive.skewJoin.enabled"</span>
+)  <span class="c"># debe ser "true"</span></pre>
+  </div>
+  <div class="foot"><span>Suele venir activo en runtimes recientes</span><span class="swipe">→</span></div>
+</section>
+
+<!-- 5. Fix 3 broadcast -->
+<section class="slide">
+  <div class="top"><span class="tag">CÓMO ARREGLARLO · CONEXIÓN CON DÍA 3</span><span class="num">5/7</span></div>
+  <h2>Fix 3: si la otra tabla es pequeña, <span class="y">broadcast</span></h2>
+  <p class="lead">Sin shuffle no hay partición sesgada: cada executor recibe una copia de la tabla pequeña y hace el join localmente.</p>
+  <div class="win" style="margin-top:50px">
+    <div class="bar"><i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i><i class="dot" style="background:#28c840"></i><span class="fn">broadcast_join.py</span></div>
+<pre><span class="k">from</span> pyspark.sql.functions <span class="k">import</span> broadcast
+
+joined = big.<span class="f">join</span>(<span class="f">broadcast</span>(small), <span class="s">"key"</span>)</pre>
+  </div>
+  <div class="split" style="margin-top:50px">
+    <div class="card"><h3 style="font-size:34px;margin-bottom:10px" class="g">✅ Úsalo cuando</h3><p style="font-size:28px;line-height:1.4;color:var(--muted)">La tabla pequeña cabe cómodamente en la memoria de cada executor.</p></div>
+    <div class="card"><h3 style="font-size:34px;margin-bottom:10px" class="r">⚠️ Evítalo cuando</h3><p style="font-size:28px;line-height:1.4;color:var(--muted)">Las dos tablas son grandes. Ahí toca el fix 4.</p></div>
+  </div>
+  <div class="foot"><span>¿Te perdiste el Día 3? Broadcast vs Shuffle Join</span><span class="swipe">→</span></div>
+</section>
+
+<!-- 6. Fix 4 salting -->
+<section class="slide">
+  <div class="top"><span class="tag">CÓMO ARREGLARLO · MÁS ESFUERZO</span><span class="num">6/7</span></div>
+  <h2 style="margin-top:44px">Fix 4: <span class="y">salting</span>, reparte la llave caliente en N pedazos</h2>
+  <div class="win">
+    <div class="bar"><i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i><i class="dot" style="background:#28c840"></i><span class="fn">salted_join.py</span></div>
+<pre>N = <span class="n">8</span>  <span class="c"># ajusta según el tamaño de la llave</span>
+
+<span class="c"># Lado grande: sal aleatoria 0..N-1</span>
+big = big.<span class="f">withColumn</span>(
+    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>)
+)
+<span class="c"># Lado pequeño: una copia por cada sal</span>
+small = small.<span class="f">withColumn</span>(
+    <span class="s">"salt"</span>,
+    F.<span class="f">explode</span>(F.<span class="f">array</span>(
+        *[F.<span class="f">lit</span>(i) <span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(N)]
+    ))
+)
+joined = big.<span class="f">join</span>(small, [<span class="s">"key"</span>, <span class="s">"salt"</span>])</pre>
+  </div>
+  <div class="callout">La llave caliente ahora se procesa en <span class="y">N tareas</span> en paralelo. El costo: la tabla pequeña se multiplica por N.</div>
+  <div class="foot"><span>Código completo en el repo (primer comentario)</span><span class="swipe">→</span></div>
+</section>
+
+<!-- 7. Close -->
+<section class="slide">
+  <div class="top"><span class="tag">RESUMEN</span><span class="num">7/7</span></div>
+  <h2>De menos a más esfuerzo</h2>
+  <div class="list" style="gap:40px">
+    <div class="item"><div class="badge">1</div><div><h3>Filtra nulos</h3></div></div>
+    <div class="item"><div class="badge">2</div><div><h3>Activa AQE skew join</h3></div></div>
+    <div class="item"><div class="badge">3</div><div><h3>Broadcast si una tabla es pequeña</h3></div></div>
+    <div class="item"><div class="badge">4</div><div><h3>Salting para la llave caliente</h3></div></div>
+  </div>
+  <div class="card" style="margin-top:60px">
+    <p style="font-size:40px;line-height:1.35;font-weight:700">💬 ¿Cuál ha sido tu peor caso de skew?<br><span style="color:var(--muted);font-weight:400">Cuéntamelo en los comentarios 👇</span></p>
+  </div>
+  <div class="foot"><span class="swipe">Sígueme para el Día 5/100 📌</span><span>repartition() vs coalesce()</span></div>
+</section>
+
+</body>
+</html>
