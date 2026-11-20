@@ -67,3 +67,15 @@ p.lead{font-size:38px;line-height:1.36;font-weight:400}
 .cap b{font-weight:700}
 .tag{display:inline-block;font-family:'Montserrat';font-weight:800;font-size:22px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border-radius:4px;background:var(--acc);color:var(--inkbg)}
 .light .tag{color:#E7F3F1}
+
+/* glosario en línea: define cada término técnico donde aparece (máx. 2 por lámina) */
+.defs{margin-top:28px}
+.def{display:flex;gap:26px;align-items:baseline;padding:18px 0;border-top:2px solid var(--rule)}
+.def:last-child{border-bottom:2px solid var(--rule)}
+.def dt{flex:none;width:200px;font-family:'Montserrat';font-weight:800;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+.def dd{font-size:29px;line-height:1.35}
+
+/* paso numerado dentro de una lámina (ej. dos arreglos relacionados) */
+.step{display:flex;gap:18px;align-items:baseline;font-family:'Montserrat';font-weight:800;font-size:36px;line-height:1.15}
+.step .n{font-weight:900;color:var(--acc);font-size:40px}
+.why{font-size:30px;line-height:1.38;color:var(--mut);margin:12px 0 22px}

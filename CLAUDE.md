@@ -91,6 +91,25 @@ N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARD
 
 ---
 
+## 4.1 Accesible para todos (obligatorio)
+
+Los temas pueden ser avanzados, pero el carrusel debe entenderlo alguien que sabe SQL y nunca ha usado Spark. Sin agregar láminas:
+
+- **Glosario en línea**: todo término técnico (partición, shuffle, AQE, broadcast, spill...) se define en lenguaje simple, en máximo ~15 palabras, **en la lámina donde aparece por primera vez**, aunque el copy también lo explique. La redundancia es intencional: mucha gente solo ve las láminas.
+  - Con el componente `.defs` / `.def` de `theme.css` (término + definición), o dentro del lead o de una línea `.why`.
+  - Máximo 2 definiciones por lámina. Si hacen falta más, la lámina tiene demasiadas ideas.
+- **Primero el mecanismo, después el código**: la lámina del problema explica *por qué* pasa (ej. el skew existe porque el shuffle junta las filas de la misma llave), con un visual y no solo el nombre del problema.
+- **Código narrado**:
+  - Antes de cada bloque, una frase en español dice qué hace y por qué.
+  - En el snippet de la lámina, los comentarios van en español y narran los pasos (`# Grande: cada fila recibe una sal`). `example.py` sigue en inglés.
+  - Nada de variables auxiliares que no aporten (ej. `conf = spark.conf`).
+- **Antes / Después** cuando una técnica transforma datos (ej. `ANTES: A · 1 tarea` → `DESPUÉS: A_0 A_1 A_2 A_3`).
+- **Prueba final por lámina**: ¿alguien que no conoce el término entendería qué pasa y por qué importa? Si no, falta una definición o un visual.
+
+Referencia: `days/day04_data_skew/build.py` (láminas 2, 3, 4 y 6) y su helper `defs()`.
+
+---
+
 ## 5. Anti-"parece hecho con IA" (obligatorio)
 
 **Prohibido** en las piezas visuales:
@@ -209,6 +228,7 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 - [ ] Portada oscura con un visual; cierre oscuro con pregunta, `GUARDA`, `DÍA NN+1` y `REPO`.
 - [ ] Ninguna lámina con texto cortado, código desbordado o fuente menor de 24 px (revisado en PNG).
 - [ ] Nada de la lista de prohibidos de la sección 5.
+- [ ] Cada término técnico está definido en la lámina donde aparece por primera vez, y cada bloque de código va precedido de una frase que dice qué hace (sección 4.1).
 - [ ] El copy sigue la estructura de la sección 6, sin links en el cuerpo, entre 700 y 2,000 caracteres.
 - [ ] El código fue verificado contra la documentación oficial, o quedó marcado como `VERIFICAR:`.
 - [ ] La tabla de seguimiento del `README.md` y el `post.md` quedaron actualizados.

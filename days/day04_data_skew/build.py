@@ -73,7 +73,7 @@ def s1() -> str:
     chart = (
         '<div style="margin-top:44px;display:flex;flex-direction:column;gap:14px">' + "".join(rows) + "</div>"
         '<div style="display:flex;justify-content:space-between;margin-top:22px;font-size:26px;color:var(--mut)">'
-        '<span>Resto de tareas: ~2 min c/u</span><span style="font-style:italic">Ilustrativo</span></div>'
+        '<span>Cada barra es una tarea en paralelo. El resto: ~2 min</span><span style="font-style:italic">Ilustrativo</span></div>'
     )
     return slide(
         1, "dark",
@@ -83,26 +83,39 @@ def s1() -> str:
 
 
 # ---------- 02 · qué es ----------
+def defs(pairs: list[tuple[str, str]]) -> str:
+    """Inline glossary rows: plain-language definition of each technical term."""
+    rows = "".join(f'<div class="def"><dt>{t}</dt><dd>{d}</dd></div>' for t, d in pairs)
+    return f'<dl class="defs">{rows}</dl>'
+
+
 def s2() -> str:
-    cols = [("P1", 12, "120 mil"), ("P2", 9, "90 mil"), ("P3", 14, "140 mil"), ("P4", 100, "9.8 M")]
+    cols = [("Llave B", 12, "120 mil"), ("Llave C", 9, "90 mil"), ("Llave D", 14, "140 mil"), ("Llave A", 100, "9.8 M")]
     bars = []
     for name, h, rows in cols:
         hot = h == 100
         bg = "var(--a1d)" if hot else "color-mix(in srgb, var(--a1) 45%, var(--icebg))"
         bars.append(
-            f'<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px">'
+            f'<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:10px">'
             f'<span style="font-family:Roboto Mono;font-size:24px;font-weight:500;color:{"var(--a1d)" if hot else "var(--mut)"}">{rows}</span>'
-            f'<div style="width:100%;height:{h*3.4}px;background:{bg}"></div>'
-            f'<span style="font-family:Montserrat;font-weight:800;font-size:26px">{name}</span></div>'
+            f'<div style="width:100%;height:{h*2.5}px;background:{bg}"></div></div>'
         )
+    labels = "".join(
+        f'<span style="flex:1;text-align:center;font-family:Montserrat;font-weight:800;font-size:24px">{name}</span>'
+        for name, _, _ in cols
+    )
     body = (
-        '<div style="margin-top:56px"><div class="kicker">El problema</div>'
+        '<div style="margin-top:48px"><div class="kicker">El problema</div>'
         '<h2>Se llama <span class="hl">data skew</span>.</h2>'
-        '<p class="lead" style="margin-top:28px">Los datos se reparten mal: una partici&oacute;n recibe casi todo.</p></div>'
-        '<div style="display:flex;gap:30px;align-items:flex-end;margin-top:36px;height:480px;border-bottom:3px solid #071A22;padding:0 8px">'
+        '<p class="lead" style="margin-top:24px;font-size:34px">En un join, Spark junta las filas que tienen la misma llave. '
+        'Si una llave tiene casi todas las filas, una sola parte del trabajo recibe casi todo.</p></div>'
+        '<div style="display:flex;gap:30px;align-items:flex-end;margin-top:30px;height:300px;border-bottom:3px solid #071A22;padding:0 8px">'
         + "".join(bars) + "</div>"
-        '<p class="cap" style="font-size:34px"><b>El stage termina cuando termina la m&aacute;s lenta.</b> '
-        'Las dem&aacute;s ya acabaron y el cl&uacute;ster paga por esperar.</p>'
+        f'<div style="display:flex;gap:30px;padding:12px 8px 0">{labels}</div>'
+        + defs([
+            ("Partición", "Un pedazo de tus datos. Cada una la procesa una tarea, en paralelo."),
+            ("Shuffle", "Mover filas entre máquinas para juntar las de la misma llave."),
+        ])
     )
     return slide(2, "light", body)
 
@@ -110,52 +123,56 @@ def s2() -> str:
 # ---------- 03 · señales ----------
 def s3() -> str:
     items = [
-        ("01", "Una tarea dura <b>10x</b> m&aacute;s que la mediana."),
-        ("02", "Su <b>Shuffle Read</b> es enorme frente al resto."),
-        ("03", "<b>Spill a disco</b> solo en unas pocas tareas."),
+        ("01", "Una tarea dura <b>10x</b> más que la mediana.", "La mediana es lo que dura una tarea típica."),
+        ("02", "Su <b>Shuffle Read</b> es enorme.", "Shuffle Read: datos que recibió de otras máquinas."),
+        ("03", "<b>Spill a disco</b> en pocas tareas.", "Spill: no le cabe en memoria y usa el disco (lento)."),
     ]
     lines = "".join(
-        f'<div style="display:flex;gap:34px;align-items:baseline;padding:26px 0;border-top:2px solid var(--rule)">'
-        f'<span style="font-family:Montserrat;font-weight:900;font-size:92px;color:var(--a1l);line-height:1;width:150px">{n}</span>'
-        f'<span style="font-size:40px;line-height:1.3">{t}</span></div>'
-        for n, t in items
+        f'<div style="display:flex;gap:30px;align-items:baseline;padding:16px 0;border-top:2px solid var(--rule)">'
+        f'<span style="font-family:Montserrat;font-weight:900;font-size:68px;color:var(--a1l);line-height:1;width:120px;flex:none">{n}</span>'
+        f'<div><div style="font-size:35px;line-height:1.25">{t}</div>'
+        f'<div style="font-size:28px;line-height:1.35;color:var(--mut);margin-top:8px">{d}</div></div></div>'
+        for n, t, d in items
     )
     table = (
-        '<div style="margin-top:36px;background:#05141A;border-radius:6px;padding:26px 30px;font-family:Roboto Mono;font-size:25px">'
-        '<div style="color:var(--mut);margin-bottom:14px">Stage &rarr; Summary Metrics &rarr; Duration</div>'
+        '<div style="margin-top:18px;background:#05141A;border-radius:6px;padding:20px 30px;font-family:Roboto Mono;font-size:25px">'
+        '<div style="color:var(--mut);margin-bottom:12px">Stage &rarr; Summary Metrics &rarr; Duration</div>'
         '<div style="display:flex;justify-content:space-between"><span style="color:var(--mut)">Min</span><span style="color:var(--mut)">Median</span><span style="color:var(--mut)">75th</span><span style="color:var(--hl)">Max</span></div>'
         '<div style="display:flex;justify-content:space-between;margin-top:8px;font-size:30px"><span>1 s</span><span>3 s</span><span>3 s</span><span style="color:var(--hl);font-weight:500">58 min</span></div></div>'
     )
     body = (
-        '<div style="margin-top:56px"><div class="kicker">C&oacute;mo detectarlo</div>'
-        '<h2>3 se&ntilde;ales en la Spark UI.</h2></div>'
-        f'<div style="margin-top:34px">{lines}</div>' + table
+        '<div style="margin-top:48px"><div class="kicker">Cómo detectarlo</div>'
+        '<h2>3 señales en la <span class="hl">Spark UI</span>.</h2>'
+        '<p style="font-size:28px;color:var(--mut);margin-top:14px">La Spark UI es la página que muestra cómo corrió cada tarea de tu job.</p></div>'
+        f'<div style="margin-top:16px">{lines}</div>' + table
     )
     return slide(3, "dark", body)
 
 
-# ---------- 04 · fixes 1 y 2 ----------
+# ---------- 04 · arreglos 1 y 2 ----------
 def s4() -> str:
-    c1 = (
-        '<div class="code" style="font-size:30px;padding:36px 38px"><span class="c"># 1. Fuera las llaves nulas</span>\n'
-        'clean = events.<span class="f">filter</span>(\n'
+    fix1 = (
+        '<div class="step"><span class="n">1</span>Quita las filas sin llave</div>'
+        '<p class="why">Una llave NULL nunca encuentra pareja en el join, pero todas esas filas '
+        'igual viajan juntas a la misma partición.</p>'
+        '<div class="code" style="font-size:27px;padding:28px 32px">'
+        'events = events.<span class="f">filter</span>(\n'
         '    F.<span class="f">col</span>(<span class="s">"customer_id"</span>).<span class="f">isNotNull</span>()\n'
         ')</div>'
-        '<p class="cap" style="font-size:34px">Todos los <b>NULL</b> caen en la misma partici&oacute;n.</p>'
     )
-    c2 = (
-        '<div class="code" style="font-size:27px;padding:36px 38px"><span class="c"># 2. AQE divide particiones sesgadas</span>\n'
-        'conf = spark.conf\n'
-        'conf.<span class="f">set</span>(<span class="s">"spark.sql.adaptive.enabled"</span>, <span class="s">"true"</span>)\n'
-        'conf.<span class="f">set</span>(\n'
-        '    <span class="s">"spark.sql.adaptive.skewJoin.enabled"</span>, <span class="s">"true"</span>\n'
-        ')</div>'
-        '<p class="cap" style="font-size:34px">Revisa que est&eacute; activo en tu runtime.</p>'
+    fix2 = (
+        '<div class="step"><span class="n">2</span>Deja que Spark lo parta solo</div>'
+        '<p class="why"><b style="color:#071A22">AQE</b> (Adaptive Query Execution) mide las particiones '
+        'mientras el job corre y divide las que quedaron gigantes.</p>'
+        '<div class="code" style="font-size:26px;padding:28px 30px">'
+        'spark.conf.<span class="f">set</span>(<span class="s">"spark.sql.adaptive.enabled"</span>, <span class="s">"true"</span>)\n'
+        'spark.conf.<span class="f">set</span>(\n'
+        '    <span class="s">"spark.sql.adaptive.skewJoin.enabled"</span>, <span class="s">"true"</span>)</div>'
     )
     body = (
-        '<div style="margin-top:56px"><div class="kicker">Arreglo 1 y 2</div>'
+        '<div style="margin-top:48px"><div class="kicker">Arreglo 1 y 2</div>'
         '<h2>Lo barato, <span class="hl">primero</span>.</h2></div>'
-        f'<div style="margin-top:52px">{c1}</div><div style="margin-top:46px">{c2}</div>'
+        f'<div style="margin-top:44px">{fix1}</div><div style="margin-top:44px">{fix2}</div>'
     )
     return slide(4, "light", body)
 
@@ -163,62 +180,71 @@ def s4() -> str:
 # ---------- 05 · broadcast ----------
 def s5() -> str:
     node = (
-        '<div style="flex:1;border:3px solid var(--a1l);padding:26px 20px;display:flex;flex-direction:column;gap:20px">'
-        '<div style="height:64px;background:var(--a1)"></div>'
+        '<div style="flex:1;border:3px solid var(--a1l);padding:20px 18px;display:flex;flex-direction:column;gap:14px">'
+        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;color:var(--mut)">MÁQUINA {i}</span>'
+        '<div style="height:52px;background:var(--a1);display:flex;align-items:center;padding-left:14px;'
+        'font-family:Roboto Mono;font-size:24px;color:#071A22">big</div>'
         '<div style="display:flex;align-items:center;gap:12px"><div style="width:30px;height:30px;background:var(--hl)"></div>'
-        '<span style="font-family:Roboto Mono;font-size:24px;color:var(--mut)">dim</span></div></div>'
+        '<span style="font-family:Roboto Mono;font-size:24px;color:var(--mut)">copia de small</span></div></div>'
     )
     diagram = (
-        '<div style="display:flex;gap:24px;margin-top:48px">' + node * 3 + "</div>"
-        '<p style="font-size:29px;color:var(--mut);margin-top:20px">La tabla grande no se mueve. La peque&ntilde;a se copia a cada nodo.</p>'
+        '<div style="display:flex;gap:20px;margin-top:36px">' + "".join(node.format(i=i) for i in (1, 2, 3)) + "</div>"
     )
     code = (
-        '<div class="code" style="margin-top:48px;font-size:31px;padding:38px 40px"><span class="k">from</span> pyspark.sql.functions <span class="k">import</span> broadcast\n\n'
+        '<div class="code" style="margin-top:36px;font-size:29px;padding:30px 34px"><span class="k">from</span> pyspark.sql.functions <span class="k">import</span> broadcast\n\n'
         'joined = big.<span class="f">join</span>(<span class="f">broadcast</span>(small), <span class="s">"key"</span>)</div>'
     )
     body = (
-        '<div style="margin-top:56px"><div class="kicker">Arreglo 3</div>'
-        '<h2>Si la otra tabla es peque&ntilde;a: <span class="hl">broadcast</span>.</h2></div>'
+        '<div style="margin-top:48px"><div class="kicker">Arreglo 3</div>'
+        '<h2>Si la otra tabla es pequeña: <span class="hl">broadcast</span>.</h2>'
+        '<p class="lead" style="margin-top:22px;font-size:32px">Spark copia la tabla pequeña completa a cada máquina. '
+        'La grande no se mueve: sin shuffle, no hay partición gigante.</p></div>'
         + diagram + code +
-        '<p class="cap" style="font-size:34px">Sin shuffle no hay skew en ese join. Lo vimos en el <b>D&iacute;a 03</b>.</p>'
-        '<p class="cap" style="font-size:30px;color:var(--mut);margin-top:14px"><b style="color:#E7F3F1">Ojo:</b> solo si la tabla peque&ntilde;a cabe de sobra en la memoria del executor.</p>'
+        '<p class="cap" style="font-size:29px;color:var(--mut)">Lo vimos en el <b style="color:#E7F3F1">Día 03</b>. '
+        '<b style="color:#E7F3F1">Ojo:</b> solo si la tabla pequeña cabe de sobra en memoria.</p>'
     )
     return slide(5, "dark", body)
 
 
 # ---------- 06 · salting ----------
 def s6() -> str:
-    hot = (
+    cell = (
+        'height:58px;display:flex;align-items:center;justify-content:center;'
+        'font-family:Roboto Mono;font-weight:500;font-size:25px'
+    )
+    before = (
         '<div style="display:flex;align-items:center;gap:20px">'
-        '<span style="font-family:Montserrat;font-weight:900;font-size:34px;width:70px">A</span>'
-        '<div style="flex:1;height:64px;background:var(--a1d)"></div></div>'
+        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;width:150px;color:var(--mut)">ANTES</span>'
+        f'<div style="flex:1;{cell};background:var(--a1d);color:#E7F3F1">A · 1 tarea con todo</div></div>'
     )
     parts = "".join(
-        f'<div style="flex:1;height:64px;background:color-mix(in srgb, var(--a1) 55%, var(--icebg));display:flex;align-items:center;justify-content:center;'
-        f'font-family:Roboto Mono;font-weight:500;font-size:26px;color:#071A22">A_{i}</div>'
+        f'<div style="flex:1;{cell};background:color-mix(in srgb, var(--a1) 55%, var(--icebg));color:#071A22">A_{i}</div>'
         for i in range(4)
     )
-    diagram = (
-        '<div style="margin-top:48px;display:flex;flex-direction:column;gap:20px">' + hot +
-        '<div style="padding-left:90px;font-family:Montserrat;font-weight:800;font-size:28px;color:var(--a1d)">&darr; salt</div>'
-        '<div style="display:flex;align-items:center;gap:20px"><span style="width:70px"></span>'
-        '<div style="flex:1;display:flex;gap:6px">' + parts + "</div></div></div>"
+    after = (
+        '<div style="display:flex;align-items:center;gap:20px;margin-top:12px">'
+        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;width:150px;color:var(--mut)">DESPUÉS</span>'
+        f'<div style="flex:1;display:flex;gap:6px">{parts}</div></div>'
     )
     code = (
-        '<div class="code" style="margin-top:34px;font-size:26px;padding:34px 36px">'
-        'N = <span class="n">8</span>\n'
+        '<div class="code" style="margin-top:30px;font-size:26px;padding:26px 30px">'
+        'N = <span class="n">8</span>  <span class="c"># en cuántos pedazos partir la llave</span>\n'
+        '<span class="c"># Grande: cada fila recibe una sal de 0 a N-1</span>\n'
         'big = big.<span class="f">withColumn</span>(\n'
-        '    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>)\n'
-        ')\n'
+        '    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>))\n'
+        '<span class="c"># Pequeña: una copia por cada sal posible</span>\n'
         'salts = F.<span class="f">array</span>(*[F.<span class="f">lit</span>(i) <span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(N)])\n'
         'small = small.<span class="f">withColumn</span>(<span class="s">"salt"</span>, F.<span class="f">explode</span>(salts))\n'
         'joined = big.<span class="f">join</span>(small, [<span class="s">"key"</span>, <span class="s">"salt"</span>])</div>'
     )
     body = (
-        '<div style="margin-top:56px"><div class="kicker">Arreglo 4</div>'
-        '<h2>Salting: parte la llave <span class="hl">caliente</span>.</h2></div>'
-        + diagram + code +
-        '<p class="cap" style="font-size:31px"><b>El costo:</b> la tabla peque&ntilde;a se replica N veces. Elige N seg&uacute;n qu&eacute; tan caliente es la llave.</p>'
+        '<div style="margin-top:48px"><div class="kicker">Arreglo 4</div>'
+        '<h2>Salting: parte la llave <span class="hl">caliente</span>.</h2>'
+        '<p class="lead" style="margin-top:20px;font-size:31px">A cada fila le agregas un número al azar, la <b>sal</b>. '
+        'La llave A se vuelve A_0, A_1, A_2... y se reparte en varias tareas.</p></div>'
+        f'<div style="margin-top:28px">{before}{after}</div>'
+        + code +
+        '<p class="cap" style="font-size:29px;margin-top:18px"><b>El costo:</b> la tabla pequeña se copia N veces.</p>'
     )
     return slide(6, "light", body)
 
