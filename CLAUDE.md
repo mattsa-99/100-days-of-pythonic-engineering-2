@@ -89,7 +89,7 @@ N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARD
   - Mismas paletas y fuentes. Varios bloques pequeños en movimiento a la vez (flujos, flechas, datos que viajan), porque la gente se queda leyendo cada flujo.
   - Entregables en `days/dayNN_slug/`: `dayNN_slug.gif` (el que se sube) y `dayNN_slug.png` (versión estática de respaldo).
   - Bucle corto: de 3 a 5 segundos a 15-20 FPS. El peso del GIF debe quedar por debajo de ~5 MB (límite de imágenes de LinkedIn, **VERIFICAR** el vigente antes de publicar). Si pesa de más: menos frames, menos colores o menos tamaño. El diseño plano y de pocos colores de este sistema comprime muy bien.
-  - Cómo se produce (por probar en el primer día animado): `build.py` genera el HTML con la animación controlada por un progreso `t` de 0 a 1; Chrome headless captura un frame por cada valor de `t`; y Pillow arma el GIF (`pip install pillow`, en un entorno virtual). No hay `ffmpeg` ni Pillow instalados en esta máquina. Alternativa manual en Mac: grabar el HTML con Kap y exportar a GIF.
+  - Cómo se produce (probado el 19 nov 2026 con el Día 06: 24 frames a 80 ms, 0.33 MB): `build.py` genera un HTML por frame con la animación controlada por un progreso `t` de 0 a 1 (sin animaciones CSS: cada frame se dibuja con su `t`); Chrome headless captura cada frame (`--screenshot --window-size=1080,1350 --force-device-scale-factor=1 --hide-scrollbars`); y Pillow arma el GIF con **una paleta compartida** para todos los frames (así no parpadean los colores), `loop=0` y `optimize=True`. Pillow va en un entorno virtual (`python3 -m venv .venv && .venv/bin/pip install pillow`). El último frame se guarda también como el PNG estático de respaldo. Alternativa manual en Mac: grabar el HTML con Kap y exportar a GIF.
 - "Ventana macOS" del plan V3 (días 10 y 12): se resuelve como carrusel corto Antes/Después con bloques `.code` del tema, sin los tres puntos de ventana ni sombras.
 
 **Límites prácticos para que nada se desborde** (aprendidos al renderizar):
@@ -331,8 +331,16 @@ Una noticia de Databricks por semana, la más relevante de **toda la plataforma*
   - Indicar siempre el estado oficial (`Public Preview`, `GA`, `Beta`) y las nubes donde está disponible. Si no está claro en la fuente, no se afirma.
   - El ejemplo de la lámina se contrasta con la documentación oficial (sintaxis, nombres, parámetros) o se prueba en un workspace. Mientras no, queda `VERIFICAR:` en `post.md`.
   - Nombres de productos exactamente como los escribe Databricks en la fuente (sección 4.1).
-- **Formato**: imagen única (PNG) o carrusel corto (PDF, 4 o 5 láminas), con las reglas de diseño (secciones 3 a 5) y de claridad (4.1).
-  - Paleta fija `medianoche`, para que la serie se reconozca.
+- **Formato**: se elige según la noticia, con las reglas de diseño (secciones 3 a 5) y de claridad (4.1):
+  - **Imagen única (PNG)**: una sintaxis nueva, un snippet corto, una configuración.
+  - **GIF animado (se sube como foto)**: pipelines, flujos y todo lo que se mueve: datos que pasan de bronze a silver, eventos que llegan, una tabla que se refresca, un job que dispara otro. Si la novedad es un flujo, se muestra moviéndose. Receta y límites en la sección 4, "Formatos alternativos". Entregables: `AAAA-wSS_slug.gif` y `AAAA-wSS_slug.png` (respaldo estático). El ejemplo real también va en pantalla: el flujo usa nombres y filas concretas.
+  - **Carrusel corto (PDF, 4 o 5 láminas)**: varios pasos o requisitos que no caben en una lámina.
+  - No repetir el mismo formato tres lunes seguidos (revisar la columna Formato de `news/README.md`).
+- **Paleta**: rota entre `pino`, `bosque` y `medianoche`, según el tipo de noticia (sección 2):
+  - `pino`: ahorro de costo o rendimiento, o un antes / después ("antes hacías X, ahora Y").
+  - `bosque`: pipelines, arquitectura y flujos de datos, gobierno (Unity Catalog), algo para guardar.
+  - `medianoche`: IA y agentes, BI y analistas, anuncios grandes de plataforma, temas de opinión.
+  - Nunca la misma paleta dos lunes seguidos (revisar la columna Paleta de `news/README.md`); si toca repetir, se usa la siguiente que encaje. La serie se reconoce por la cabecera, no por el color.
   - **El ejemplo real va en pantalla, siempre.** Es el centro de la pieza: un caso concreto con nombres que se entienden solos (tablas, columnas, valores), en la forma que mejor muestre la novedad: snippet de código o SQL narrado (sección 4.1), configuración o UI recreada, o un antes / después con filas en `mini_table()`. Debe responder "¿cómo se ve esto en mi trabajo?" sin abrir otro archivo.
   - Imagen única: el ejemplo ocupa al menos un tercio de la lámina. Carrusel: tiene su propia lámina ("Ejemplo real"), y si el código es largo, una lámina con el caso en filas y otra con el código (sección 4.1, técnicas poco conocidas).
   - Cabecera: `DATABRICKS ESTA SEMANA · SEMANA SS` en lugar de `PYTHONIC ENGINEERING · DÍA NN / 100` (en `build.py`: `SERIES = "Databricks esta semana"` y la etiqueta del día cambiada por la semana). Píldora de nivel igual que en la serie.

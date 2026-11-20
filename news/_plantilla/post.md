@@ -5,8 +5,8 @@
 | Fecha de publicación | <lunes AAAA-MM-DD, 11:00 a.m. hora Colombia> |
 | Fuente oficial | <URL del blog, release notes o documentación de Databricks> |
 | Estado en Databricks | <Public Preview / GA / Beta> · <nubes: Azure, AWS, GCP> |
-| Paleta | `medianoche` |
-| Formato | <Imagen única (PNG) / Carrusel corto (PDF, 4-5 láminas)> |
+| Paleta | <`pino` / `bosque` / `medianoche`, según CLAUDE.md sección 12; distinta a la de la semana anterior> |
+| Formato | <Imagen única (PNG) / GIF animado, se sube como foto / Carrusel corto (PDF, 4-5 láminas)> |
 | Estado | Pendiente |
 | Link | — |
 
