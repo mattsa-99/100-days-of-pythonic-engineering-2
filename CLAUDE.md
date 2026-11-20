@@ -1,77 +1,223 @@
-# 100 Days of Pythonic Engineering: guía del repo
+# CLAUDE.md: 100 Days of Pythonic Engineering
 
-Serie de LinkedIn en español sobre Data Engineering (Python, Spark, Databricks, Azure).
-Plan base: *Plan Maestro V3* (19 nov 2026), en `../Plan_Maestro_V3_100_Days_of_Pythonic_Engineering.docx`.
+Este repo produce los posts de LinkedIn de **Mateo Soto** (Data Engineer, Azure + Databricks) para la serie **"100 Days of Pythonic Engineering"**, y los scripts de código que los acompañan.
 
-## Estructura
+Toda pieza nueva (copy, carrusel, infografía, script) **debe** seguir este documento. Si una petición choca con una regla, avisa del conflicto antes de romperla.
 
-```
-README.md                  # tabla de seguimiento + "📍 Dónde vamos" (fuente de verdad del avance)
-ideas.md                   # banco de temas de reserva (plan V2), columna "Usado"
-days/day_XX_<slug>/
-├── post.md                # metadatos, checklist, post y primer comentario
-├── *.py / *.sql           # versión completa del snippet del post
-└── carousel/              # solo días con carrusel: carousel.html + day_XX_<slug>.pdf
-tools/render_carousel.sh   # HTML → PDF con Chrome headless
-tools/preview_pdf.swift    # PDF → PNG por página, para revisar el resultado
-```
+---
 
-- Días 01–03: publicados antes del repo. `post.md` solo tiene el link y un TODO: falta el texto publicado y el código (pedírselo al usuario).
-- Días 04–15: `post.md` sacado tal cual del plan V3. Si se edita un post, mantener el snippet alineado con el archivo de código de la carpeta.
+## 1. Flujo de trabajo por día
 
-## Formato de `post.md`
+1. Lee `docs/Plan_Maestro_V3_100_Days_of_Pythonic_Engineering.docx` (calendario) y la tabla de seguimiento del `README.md` (sección 9).
+2. Identifica el **tipo de post** (sección 2). Ese tipo define la **paleta** (sección 3) y el **formato** (sección 4).
+3. La carpeta `days/dayNN_slug/` ya existe para los días 04 a 15 (con `post.md` y `example.py`/`example.sql`). Agrega `build.py` copiando el de `days/day04_data_skew/` (ejemplo de referencia aprobado): reutiliza `font_css()`, `chrome()`, `slide()` y `main()`, y cambia `TOTAL`, el número de día, el nivel y las funciones de cada lámina.
+4. Revisa o ajusta el copy (sección 6) en `days/dayNN_slug/post.md`, con el primer comentario al final.
+5. Construye y renderiza: `scripts/render.sh days/dayNN_slug <paleta>`.
+6. **Revisa visualmente cada lámina** (abre los PNG de `preview/`): sin texto cortado, sin código desbordado, sin huecos grandes.
+7. Pasa el checklist de la sección 10.
+8. Actualiza el seguimiento (sección 9) a "Listo" y, cuando Mateo confirme, a "Publicado" con el link.
+9. Commit en git (sección 11).
 
-1. `# Día XX: <tema>`
-2. Tabla de metadatos: Nivel, Tipo de post, Formato visual, **Estado**, **Link**.
-3. `## Estructura visual` (láminas o partes de la pieza visual).
-4. `## Hook alternativo` (cita).
-5. `## Antes de publicar`: checklist `- [ ]`. Los días 06, 08, 09 y 14 tienen puntos marcados como VERIFICAR.
+---
+
+## 2. Tipos de post (rotación)
+
+| Tipo | Objetivo | Paleta | Formato preferido |
+|---|---|---|---|
+| **Errores que cuestan plata** | Costo y rendimiento en Spark, Databricks y Azure | `pino` | Carrusel PDF |
+| **Antes vs. Después (código)** | Quick wins de Python y refactors | `pino` | Carrusel corto (4 a 5 láminas) o imagen única |
+| **Arquitectura en una imagen** | Pipelines, Medallion, SCD, flujos | `bosque` | Carrusel PDF o imagen única |
+| **Guardable** | Checklists, roadmaps, cheat sheets | `bosque` | Carrusel PDF |
+| **Pregunta de entrevista** | Autoridad de Mateo como entrevistador técnico | `medianoche` | Carrusel PDF |
+| **Opinión / Debate** | Generar comentarios | `medianoche` | Texto largo + 1 imagen |
+
+Regla de mezcla: no publicar más de 2 días seguidos del mismo tipo.
+
+---
+
+## 3. Sistema de color
+
+Las paletas viven en `design/theme.css`, se activan con `<body data-theme="...">` y **no se inventan colores nuevos**. Solo existen estas tres:
+
+| Token | Uso | `pino` | `bosque` | `medianoche` |
+|---|---|---|---|---|
+| `--inkbg` | Fondo de láminas oscuras | `#071A22` | `#0A1F16` | `#070F24` |
+| `--icebg` | Fondo de láminas claras | `#E7F3F1` | `#EAF4EC` | `#EDF1FA` |
+| `--a1l` | Acento sobre fondo oscuro | `#5CD1B1` | `#7EE0A1` | `#8FA4FF` |
+| `--a1` | Acento medio (barras, bordes de código) | `#2FA58A` | `#3FA968` | `#4361EE` |
+| `--a1d` | Acento sobre fondo claro | `#11634F` | `#1F6B3F` | `#2B3FB8` |
+| `--a2` | Acento secundario (casi no se usa) | `#4DA3DE` | `#5FB3C9` | `#44D7B6` |
+| `--hl` | Resaltado de la palabra clave | `#D4F26A` lima | `#B8F0FF` celeste | `#7DF9FF` cian |
+
+Reglas:
+- **Una sola palabra o frase resaltada por titular** (`<span class="hl">`). En lámina clara se ve como subrayado de marcador; en lámina oscura, como texto de color.
+- El resaltado `--hl` se usa también para **el dato crítico** de un gráfico (la barra culpable, el valor máximo). Nada más.
+- Las láminas **alternan oscuro / claro**: la portada y el cierre siempre son oscuros.
+- Colores derivados: usar `color-mix(in srgb, var(--a1) 45%, var(--icebg))`, nunca hex sueltos.
+
+---
+
+## 4. Tipografía y formato
+
+**Fuentes** (embebidas desde `design/fonts/`, licencia OFL):
+- **Montserrat 900**: titulares (`h1` 108 px portada, `h2` 84 px interiores, `letter-spacing:-.02em`, `line-height:1.02`).
+- **Montserrat 700/800**: kicker, cabecera, etiquetas, en MAYÚSCULAS con `letter-spacing:.12em` a `.14em`.
+- **Roboto 400/500/700**: texto (lead 38 px, captions 30 a 34 px). Nunca menos de 24 px.
+- **Roboto Mono 400/500**: código, números, métricas (código 26 a 31 px).
+
+**Lienzo**: 1080 x 1350 px (4:5), una lámina por página de PDF. Márgenes laterales de 84 px.
+
+**Estructura fija de cada lámina** (ya implementada en `chrome()` del ejemplo):
+- Cabecera: `DÍA NN / 100` a la izquierda y la píldora de nivel (`BÁSICO`, `INTERMEDIO`, `AVANZADO`) a la derecha, con una línea fina debajo.
+- Kicker de 1 a 3 palabras (ej. `ARREGLO 3`), titular y contenido.
+- Pie: `Mateo Soto` a la izquierda y `NN / TT` en Roboto Mono a la derecha.
+- Barra de progreso segmentada en el borde inferior.
+- `DESLIZA →` en todas las láminas menos la última.
+
+**Estructura del carrusel** (de 5 a 8 láminas):
+1. **Portada (oscura)**: hook en forma de problema concreto y un visual que lo demuestre (gráfico, diagrama). Nada de portadas solo con texto.
+2. **El problema**: qué es, explicado en una frase y un visual.
+3. a N-1. **Contenido**: una idea por lámina; si hay código, como máximo 8 líneas por lámina.
+N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARDA`, `DÍA NN+1` y `REPO`.
+
+**Formatos alternativos**:
+- Imagen única: el mismo lienzo y la misma cabecera y pie, sin barra de progreso ni "Desliza".
+- Infografía animada (opcional): mismas paletas y fuentes; las animaciones solo se permiten en líneas conectoras (`stroke-dashoffset`).
+- "Ventana macOS" del plan V3 (días 10 y 12): se resuelve como carrusel corto Antes/Después con bloques `.code` del tema, sin los tres puntos de ventana ni sombras.
+
+**Límites prácticos para que nada se desborde** (aprendidos al renderizar):
+- Código a 29 px dentro de `.code`: máximo unos 48 caracteres por línea; a 26 px, unos 54. Parte las líneas largas en lugar de bajar de 26 px.
+- Como máximo 2 bloques de código por lámina.
+
+---
+
+## 5. Anti-"parece hecho con IA" (obligatorio)
+
+**Prohibido** en las piezas visuales:
+- Emojis dentro de las láminas.
+- Degradados de fondo, glow, sombras grandes, glassmorphism.
+- Tarjetas redondeadas con sombra en cuadrícula (el look de "feature grid").
+- Morados, rosados, naranjas o cualquier color fuera de la sección 3.
+- Iconos genéricos (cohetes, bombillos, cerebros, robots).
+- Más de una idea por lámina, o párrafos de más de 3 líneas.
+- Fotos de stock o imágenes de personas.
+
+**Sí**:
+- Diseño plano, líneas finas (2 px), esquinas de 0 a 6 px.
+- Visuales hechos para el tema: barras con datos, maquetas de la Spark UI, diagramas de particiones o nodos dibujados con divs o SVG.
+- Números grandes en Montserrat 900 para listas (`01`, `02`, `03`).
+- Una textura de ruido sutil (ya incluida en `theme.css`).
+- Datos ilustrativos marcados como `Ilustrativo` en la lámina.
+
+---
+
+## 6. Copy del post (texto de LinkedIn)
+
+Idioma: **español neutro**, tuteo, tono de colega senior (directo y sin exagerar).
+
+Estructura:
+1. **Primera línea**: `<emoji> Día N/100: Pythonic Data Engineering | <Tema>` (en "Pregunta de entrevista" se usa `🎯 Día N/100: Pregunta de entrevista | <Tema>`).
+2. **Hook**: una pregunta o un error común en una línea (ej. "¿Tu job lleva una hora esperando por UNA sola tarea?").
+3. **Cuerpo**: el porqué técnico en 2 a 3 frases y después una lista con `✅` o `1️⃣ 2️⃣ 3️⃣`. Las advertencias van con `⚠️`.
+4. **Código** (opcional): máximo 10 líneas.
+5. **Pregunta final** que pida una experiencia concreta, no un "¿qué opinas?".
+6. **CTA**: `Sígueme para el Día N+1/100 📌`; en los guardables, además, `Guarda este post 📌`.
+7. **Hashtags**: de 4 a 6, siempre incluyendo `#100DaysOfPythonicEngineering`.
+
+Reglas:
+- **Ningún link en el cuerpo del post.** La documentación oficial y el repo van en el **primer comentario**.
+- Emojis solo en el copy (no en las láminas), y con moderación: como máximo uno por línea.
+- Entre 1,200 y 2,000 caracteres.
+- Nunca inventes anécdotas, cifras o experiencias de Mateo. Si el post necesita una, deja `[TU ANÉCDOTA: ...]`.
+- Nunca menciones clientes, empresas ni datos de proyectos reales.
+
+**Formato de `post.md`**:
+1. `# Día NN: <tema>`
+2. Tabla de metadatos: Nivel, Tipo de post, Paleta, Formato visual, **Estado**, **Link**.
+3. `## Estructura visual` (guion de láminas del plan V3).
+4. `## Hook alternativo`.
+5. `## Antes de publicar`: checklist `- [ ]` con los `VERIFICAR:` y avisos (ej. longitud del copy fuera de rango).
 6. `## Post (copiar y pegar)`: bloque ```` ```text ```` exacto para LinkedIn.
-7. `## Primer comentario`: documentación oficial + repo. Nunca links en el cuerpo del post.
+7. `## Primer comentario`: documentación oficial + repo.
 
-Reglas del post: hook en la primera línea, pregunta final, CTA "Sígueme para el Día X/100" (y "Guarda este post" en los guardables), hashtag `#100DaysOfPythonicEngineering`.
+Los posts de los días 04 a 15 vienen tal cual del plan V3. Si se edita un snippet del copy, mantenerlo alineado con `example.py`.
 
-## Llevar la cuenta
+---
 
-Estados: `⏳ Pendiente` → `🎨 Visual listo` → `✅ Publicado`.
+## 7. Estándares de código (scripts y snippets)
 
-- **Visual terminado:** estado `🎨 Visual listo` en la fila del README y en `post.md` (en `post.md` con la ruta del archivo, ej. `` 🎨 Visual listo (`carousel/day_04_data_skew.pdf`) ``). Actualizar "Siguiente" en "📍 Dónde vamos".
+- **Python**: nombres en inglés, tipado completo en parámetros y retorno, docstrings estilo Google en funciones públicas, PEP 8 / `black` (88 a 100 caracteres), nada de `except:` genérico, imports agrupados (stdlib, terceros, locales).
+- **PySpark**: `import pyspark.sql.functions as F`; evitar `.collect()` innecesarios; transformaciones encadenadas.
+- **Snippets en las láminas**: pueden omitir imports y tipos por espacio, pero el script completo en `days/dayNN_slug/example.py` debe cumplir todo lo anterior y ejecutarse.
+- **Verificación técnica**: toda función o configuración de Databricks, Spark o Azure se contrasta con la documentación oficial vigente antes de publicar. Si algo no se pudo verificar, se marca en `post.md` como `VERIFICAR:`.
+- **Verificación local**: `python3 -m py_compile days/*/example.py`. En esta máquina no hay Spark, Databricks ni Azure: el código PySpark, Azure y SQL se marca para probar en el workspace de Mateo (ej. los 3 casos de prueba de `day09_scd2_merge/example.sql`). Los días de solo SQL usan `example.sql`.
+- `day10_generators_yield/example.py` sí corre en local y da los datos reales de la gráfica de memoria (`python3 example.py 300000` → ~18.5 MB vs ~0.17 MB de pico).
+
+---
+
+## 8. Estructura del repo
+
+```
+CLAUDE.md
+README.md                       # tabla de seguimiento + "Dónde vamos" (fuente de verdad del avance)
+ideas.md                        # banco de temas de reserva (plan V2), columna "Usado"
+design/
+  theme.css                     # paletas + componentes (fuente de verdad visual)
+  fonts/                        # woff2 de Montserrat, Roboto y Roboto Mono (OFL)
+days/
+  day04_data_skew/              # EJEMPLO DE REFERENCIA
+    build.py                    # genera el HTML de las láminas
+    post.md                     # copy + primer comentario
+    example.py                  # script ejecutable del tema (example.sql en días de solo SQL)
+    day04_data_skew.pdf         # carrusel final
+    preview/                    # PNG de cada lámina
+  day01_* a day03_*             # publicados antes del repo: solo post.md con link y TODO
+scripts/
+  render.sh                     # build.py -> HTML -> PDF -> PNG
+  preview_pdf.swift             # PDF -> PNG en macOS cuando no hay pdftoppm
+docs/
+  Plan_Maestro_V3_100_Days_of_Pythonic_Engineering.docx
+```
+
+Render: `scripts/render.sh days/day04_data_skew pino` (requiere Chrome/Chromium; para los PNG usa `pdftoppm` de Poppler y, si no está, `scripts/preview_pdf.swift`, que genera los mismos `preview/slide-N.png`).
+
+---
+
+## 9. Seguimiento
+
+La tabla vive en **`README.md`** (una sola fuente de verdad) con columnas Día, Nivel, Tema, Tipo, Paleta, Formato, Estado y Link, más la línea "Dónde vamos".
+
+Estados: `⏳ Pendiente` → `🎨 Listo` (visual renderizado y revisado) → `✅ Publicado`.
+
+- **Visual terminado**: estado `🎨 Listo` en el README y `Listo (dayNN_slug.pdf)` en la tabla de `post.md`. Actualizar "Siguiente".
 - **"Ya salió el Día X"** (con o sin link):
   1. `README.md`: estado `✅ Publicado`, Link `[post](<url>)`, actualizar "Último publicado" y "Siguiente".
-  2. `days/day_XX_*/post.md`: filas Estado y Link.
-  3. Commit `Day XX: published`.
-- **Días 16+:** crear `days/day_XX_<slug>/post.md` con el formato de arriba, agregar la fila al README, rotar los 5 tipos de post y marcar en `ideas.md` el tema usado.
-- **Revisión de métricas:** después del Día 08 (5 posts del plan V3), pedir guardados y comentarios por post y proponer ajustes al calendario.
+  2. `days/dayNN_slug/post.md`: filas Estado y Link.
+  3. Commit `Day NN: published`.
+- **Días 01 a 03**: publicados antes del repo, con paleta "(antiguo)". Falta el texto publicado y el código: pedírselos a Mateo.
+- **Días nuevos (16+)**: crear `days/dayNN_slug/` con `post.md` en el formato de la sección 6, agregar la fila al README y marcar en `ideas.md` el tema usado.
+- **Revisión de métricas**: después del Día 08 (5 posts del plan V3), pedir guardados y comentarios por post y proponer ajustes.
 
-## Carruseles PDF
+Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de la sección 2, priorizando lo que tenga más guardados y comentarios en los posts anteriores. Mateo aprueba la lista antes de producir.
 
-- Un `<section class="slide">` por lámina, 1080x1350 px, `@page { size: 1080px 1350px; margin: 0; }`. 6 a 8 láminas.
-- Partir de `days/day_04_data_skew/carousel/carousel.html` como plantilla. Sistema visual:
-  - Fondo `#0b1220` con gradientes radiales azul/amarillo; paneles `#121b2e`, bordes `#23304a`.
-  - Acentos: amarillo Python `#ffd43b`, azul `#4b8bbe`, rojo `#ff5d5d`, verde `#3ddc97`.
-  - Fuentes: Inter (texto) y JetBrains Mono (código), vía Google Fonts.
-  - Componentes: `.top` (tag + "N/7"), `.foot` ("Desliza →"), `.card`, `.badge` numerado, `.win` (ventana macOS con resaltado manual `.k .s .n .f .c`), `.callout`, `.split`.
-  - Portada: pill con el tipo de post + título grande + "Día X/100". Cierre: resumen + pregunta + CTA del día siguiente.
-- **Errores conocidos al renderizar:**
-  - No usar `box-shadow`: Chrome lo pinta en el PDF como bandas oscuras.
-  - Código a 29px: máximo ~48 caracteres por línea dentro de `.win`, si no se corta. Partir las líneas largas.
-  - No más de 2 bloques de código + 2 tarjetas por lámina.
-- **Generar y revisar:**
-  ```bash
-  tools/render_carousel.sh days/day_XX_*/carousel/carousel.html days/day_XX_*/carousel/day_XX_<slug>.pdf
-  swift tools/preview_pdf.swift <pdf> <scratchpad>/png   # luego mirar cada PNG
-  ```
-  Debe dar las páginas esperadas y tamaño 810x1013 pt (= 1080x1350 px). Revisar cada lámina antes de dar el visual por listo.
-- Otros formatos (infografía animada opciones A/B/C, ventana macOS opción D, post de texto) todavía no tienen plantilla en el repo. Al hacer el primero, documentarlo aquí.
+---
 
-## Código
+## 10. Checklist antes de entregar
 
-- Python: nombres en inglés, tipado completo, docstrings Google con `Args:`/`Returns:`, PEP 8, imports en 3 bloques. SQL con comentarios en inglés.
-- Sin datos, nombres ni detalles de clientes.
-- Verificación local: `python3 -m py_compile days/*/*.py`. Aquí no hay Spark, Databricks ni Azure: el código PySpark, Azure y SQL se marca para probar en el workspace del usuario (ej. los 3 casos de prueba de `scd2_merge.sql`).
-- `day_10_generators_yield/generators.py` corre localmente y da los números de la gráfica de memoria (`python3 generators.py 300000` → ~18.5 MB vs ~0.17 MB).
+- [ ] El tipo de post y la paleta coinciden con la tabla de la sección 2.
+- [ ] Ningún color fuera de `theme.css`; un solo resaltado por titular.
+- [ ] Portada oscura con un visual; cierre oscuro con pregunta, `GUARDA`, `DÍA NN+1` y `REPO`.
+- [ ] Ninguna lámina con texto cortado, código desbordado o fuente menor de 24 px (revisado en PNG).
+- [ ] Nada de la lista de prohibidos de la sección 5.
+- [ ] El copy sigue la estructura de la sección 6, sin links en el cuerpo, entre 1,200 y 2,000 caracteres.
+- [ ] El código fue verificado contra la documentación oficial, o quedó marcado como `VERIFICAR:`.
+- [ ] La tabla de seguimiento del `README.md` y el `post.md` quedaron actualizados.
+- [ ] Commit hecho.
 
-## Git
+---
+
+## 11. Git
 
 - Proyecto personal: identidad `Mateo Soto` del git config local. Las reglas de identidad de KOF no aplican.
-- Rama `main`. Remoto planeado `github.com/mateosotoa/100-days-of-pythonic-engineering` (el link que ya sale en los primeros comentarios), todavía sin crear ni conectar. No hacer push sin confirmación del usuario. `gh` no está instalado.
+- Rama `main`. Remoto planeado: `github.com/mateosotoa/100-days-of-pythonic-engineering` (el link que ya sale en los primeros comentarios y en la lámina de cierre), todavía sin crear. No hacer push sin confirmación de Mateo. `gh` no está instalado.
+- `preview/` y el HTML generado se versionan junto con el PDF para poder revisar sin volver a renderizar.

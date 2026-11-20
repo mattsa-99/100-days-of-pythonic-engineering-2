@@ -1,0 +1,69 @@
+/* ===== Pythonic Engineering — sistema visual =====
+   Fuentes: Montserrat (titulares), Roboto (texto), Roboto Mono (código).
+   Tres paletas oficiales: pino, bosque, medianoche (ver CLAUDE.md, sección 3). */
+
+body[data-theme="pino"]{
+  --inkbg:#071A22; --deep:#0C2E36; --icebg:#E7F3F1;
+  --a1l:#5CD1B1;   /* acento principal sobre fondo oscuro */
+  --a1:#2FA58A;    /* acento medio */
+  --a1d:#11634F;   /* acento sobre fondo claro */
+  --a2:#4DA3DE;    /* acento secundario (azul) */
+  --hl:#D4F26A;    /* resalte puntual, se usa poco */
+}
+
+body[data-theme="bosque"]{
+  --inkbg:#0A1F16; --deep:#123326; --icebg:#EAF4EC;
+  --a1l:#7EE0A1; --a1:#3FA968; --a1d:#1F6B3F; --a2:#5FB3C9; --hl:#B8F0FF;
+}
+body[data-theme="medianoche"]{
+  --inkbg:#070F24; --deep:#0F1B3D; --icebg:#EDF1FA;
+  --a1l:#8FA4FF; --a1:#4361EE; --a1d:#2B3FB8; --a2:#44D7B6; --hl:#7DF9FF;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:1080px 1350px;margin:0}
+html,body{background:#000}
+body{font-family:'Roboto',sans-serif;-webkit-font-smoothing:antialiased}
+
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;page-break-after:always;break-after:page;padding:84px 84px 0}
+.slide.dark{background:var(--inkbg);color:#E7F3F1;--mut:#8FB0B3;--rule:rgba(231,243,241,.16);--acc:var(--a1l)}
+.slide.light{background:var(--icebg);color:#071A22;--mut:#4E6B70;--rule:rgba(7,26,34,.16);--acc:var(--a1d)}
+
+/* textura sutil, solo para dar tacto de papel */
+.slide::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* cabecera */
+.top{display:flex;justify-content:space-between;align-items:center;font-family:'Montserrat';font-weight:700;font-size:23px;letter-spacing:.14em;text-transform:uppercase}
+.top .day{color:var(--acc)}
+.top .lvl{border:2px solid var(--acc);color:var(--acc);padding:7px 18px;border-radius:999px;font-size:20px;letter-spacing:.12em}
+.rule{height:2px;background:var(--rule);margin-top:28px}
+
+/* pie */
+.foot{position:absolute;left:84px;right:84px;bottom:56px;display:flex;align-items:center;justify-content:space-between;font-size:24px;color:var(--mut);font-weight:500}
+.foot b{color:inherit;font-family:'Montserrat';font-weight:700;letter-spacing:.04em}
+.foot .num{font-family:'Roboto Mono';font-size:24px}
+.prog{position:absolute;left:84px;right:84px;bottom:0;height:10px;display:flex;gap:6px}
+.prog i{flex:1;background:var(--rule);display:block}
+.prog i.on{background:var(--acc)}
+.swipe{position:absolute;right:84px;bottom:112px;font-family:'Montserrat';font-weight:700;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+
+/* tipografía */
+h1,h2{font-family:'Montserrat';font-weight:900;letter-spacing:-.02em;line-height:1.02}
+h1{font-size:108px}
+h1,h2,p.lead{text-wrap:balance}
+@media print{.slide::after{display:none}}
+h2{font-size:84px}
+.kicker{font-family:'Montserrat';font-weight:700;font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:22px}
+p.lead{font-size:38px;line-height:1.36;font-weight:400}
+.mut{color:var(--mut)}
+.hl{background:linear-gradient(transparent 62%, var(--hl) 62%, var(--hl) 92%, transparent 92%);color:inherit;padding:0 4px}
+.dark .hl{background:none;color:var(--hl)}
+
+/* código */
+.code{font-family:'Roboto Mono';font-size:29px;line-height:1.55;background:#05141A;color:#D8EAEA;border-left:8px solid var(--a1);border-radius:6px;padding:30px 34px;white-space:pre;overflow:hidden}
+.code .k{color:#7DB9F0}.code .s{color:#D4F26A}.code .f{color:#7FE3C8}.code .c{color:#6F8F94}.code .n{color:#F0B87D}
+.cap{font-size:31px;line-height:1.4;margin-top:24px}
+.cap b{font-weight:700}
+.tag{display:inline-block;font-family:'Montserrat';font-weight:800;font-size:22px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border-radius:4px;background:var(--acc);color:var(--inkbg)}
+.light .tag{color:#E7F3F1}
