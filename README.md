@@ -36,11 +36,11 @@ Nivel y paleta de cada día están en su `post.md`.
 
 Se llena unos días después de publicar (LinkedIn → "Ver analíticas"). Sirve para la revisión del Día 08: ¿qué tipo de post y qué formato generan más guardados y comentarios?
 
-| Día | Tipo de post | Formato | Impresiones | Guardados | Comentarios | Reacciones | Notas |
-|---|---|---|---|---|---|---|---|
-| 01 | Errores | Texto | | | | | |
-| 02 | Errores | Texto | | | | | |
-| 03 | Errores | Texto | | | | | |
+| Día | Tipo de post | Formato | Publicado (día y hora) | Impresiones | Guardados | Comentarios | Reacciones | Notas |
+|---|---|---|---|---|---|---|---|---|
+| 01 | Errores | Texto | | | | | | |
+| 02 | Errores | Texto | | | | | | |
+| 03 | Errores | Texto | | | | | | |
 
 ## Estructura del repo
 

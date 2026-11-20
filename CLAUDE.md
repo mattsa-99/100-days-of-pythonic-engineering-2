@@ -183,22 +183,32 @@ Referencia: `days/day04_data_skew/build.py`. Láminas 2 y 3 (definiciones), 4 (a
 
 Idioma: **español neutro**, tuteo, tono de colega senior (directo y sin exagerar).
 
-Estructura:
-1. **Primera línea**: `<emoji> Día N/100: Pythonic Data Engineering | <Tema>` (en "Pregunta de entrevista" se usa `🎯 Día N/100: Pregunta de entrevista | <Tema>`).
-2. **Hook**: una pregunta o un error común en una línea (ej. "¿Tu job lleva una hora esperando por UNA sola tarea?").
-3. **Cuerpo**: el porqué técnico en 2 a 3 frases y después una lista con `✅` o `1️⃣ 2️⃣ 3️⃣`. Las advertencias van con `⚠️`.
-4. **Código** (opcional): máximo 10 líneas.
-5. **Pregunta final** que pida una experiencia concreta, no un "¿qué opinas?".
-6. **CTA**: `Sígueme para el Día N+1/100 📌`; en los guardables, además, `Guarda este post 📌`.
-7. **Hashtags**: de 4 a 6, siempre incluyendo `#100DaysOfPythonicEngineering`.
+Estructura (basada en posts de creadores grandes de Data, ej. Zach Wilson; ver "Por qué" abajo):
+1. **Hook en la primera línea, sin etiqueta de serie**: el problema, un dato o una afirmación concreta, en máximo ~140 caracteres para que se vea completo en móvil antes del "ver más". Mejor si coincide con el titular de la portada (ej. "¿Tu job lleva una hora esperando por UNA sola tarea?"). En "Pregunta de entrevista", el hook es la pregunta entre comillas.
+2. **Re-hook** (segunda línea, después de una línea en blanco): qué va a obtener quien siga leyendo (ej. "Casi siempre es data skew, y se arregla con 4 cambios. De menos a más esfuerzo 👇").
+3. **Cuerpo**: el porqué técnico en 2 a 3 frases cortas, con una línea en blanco entre bloques. Bloques de 1 a 2 líneas.
+4. **Listas** con números simples (`1.` `2.` `3.`) y el formato `Término → explicación corta`. Sin emojis como viñetas (nada de `✅` ni `1️⃣`). Cada lista va precedida de una frase que termina en dos puntos.
+5. **Experiencia propia**: una línea con `[TU ANÉCDOTA: ...]` para que Mateo la complete o la borre. Los posts personales son los que más reacciones tienen.
+6. **Sin código en el copy**: LinkedIn no muestra el código en monoespaciado y se ve mal. El código va en las láminas y en el repo. Como mucho, una config o un comando de una línea dentro de una frase.
+7. **Pregunta final** que pida una experiencia concreta, no un "¿qué opinas?". Se mantiene porque los comentarios pesan en el algoritmo.
+8. **CTA**: compartir (`Si le sirve a alguien de tu equipo, compártelo ♻️`) y la etiqueta de la serie al final: `Día N/100 de Pythonic Data Engineering. Sígueme para el Día N+1: <tema>.` En los guardables, además, `Guarda este post`.
+9. **Hashtags**: máximo 3, siempre incluyendo `#100DaysOfPythonicEngineering`.
 
 Reglas:
 - **Ningún link en el cuerpo del post.** La documentación oficial y el repo van en el **primer comentario**.
-- Emojis solo en el copy (no en las láminas), y con moderación: como máximo uno por línea.
+- Emojis solo en el copy (no en las láminas): **máximo 3 en todo el post**, solo en el re-hook, las advertencias (`⚠️`) o el CTA. Como máximo uno por línea.
 - Entre 700 y 2,000 caracteres.
 - Nunca inventes anécdotas, cifras o experiencias de Mateo. Si el post necesita una, deja `[TU ANÉCDOTA: ...]`.
 - Nunca menciones clientes, empresas ni datos de proyectos reales.
 - **Claridad también en el copy**: la primera vez que aparece un término técnico clave, defínelo en pocas palabras entre paréntesis o en la misma frase (ej. "AQE (Adaptive Query Execution): Spark divide sola las particiones gigantes"). Mismo vocabulario nativo que las láminas (sección 4.1).
+
+**Por qué este formato** (revisión del 19 nov 2026): se analizaron posts públicos de Zach Wilson y de una creadora de Data con 83k seguidores. Patrones: hook directo sin etiquetas, listas numeradas `Término → explicación`, entre 0 y 3 emojis, 0 o 1 hashtag, sin código en el cuerpo, y los posts personales con más reacciones. La muestra es pequeña (4 posts): se valida con la tabla de Métricas en la revisión del Día 08.
+
+**Cuándo publicar** (punto de partida, a ajustar con las métricas propias):
+- **Martes, miércoles y jueves, entre 9:00 y 11:00 a.m. hora Colombia** (8:00 a 10:00 hora CDMX) para los posts fuertes (carruseles, GIF).
+- Lunes y viernes para los posts más ligeros (opinión, texto). Evitar sábado y domingo.
+- Nunca dos posts con menos de 12 horas de diferencia.
+- Anotar día y hora real de cada post en la tabla de Métricas del README para comparar después.
 
 **Formato de `post.md`**:
 1. `# Día NN: <tema>`
