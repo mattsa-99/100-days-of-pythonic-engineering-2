@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Fecha de publicación | <viernes AAAA-MM-DD> |
+| Fecha de publicación | <lunes AAAA-MM-DD, 11:00 a.m. hora Colombia> |
 | Fuente oficial | <URL del blog, release notes o documentación de Databricks> |
 | Estado en Databricks | <Public Preview / GA / Beta> · <nubes: Azure, AWS, GCP> |
 | Paleta | `medianoche` |

@@ -2,10 +2,10 @@
 
 Serie paralela a los 100 días: **una noticia de Databricks por semana**, la más relevante para Data Engineers, explicada con un **ejemplo real** y en los formatos del sistema de diseño (imagen única o carrusel corto).
 
-- **Cuándo:** todos los viernes a las 9:00 a.m. hora Colombia, con lo más relevante de la semana.
+- **Cuándo:** todos los lunes a las 11:00 a.m. hora Colombia, con lo más relevante de la semana anterior. Si el lunes es festivo, el miércoles a las 9:00 a.m.
 - **Numeración:** por semana ISO del año, aparte del conteo de los 100 días.
 - **Carpeta de cada noticia:** `news/AAAA-wSS_slug/` (ej. `news/2026-w48_lakeflow_jobs/`), creada a partir de [`_plantilla/`](_plantilla/).
-- **De dónde sale la información:** la rutina "Databricks Weekly Digest" de los lunes (Claude Doc con las novedades depuradas y sus fuentes oficiales), más una revisión de las release notes de lunes a jueves de la semana en curso.
+- **De dónde sale la información:** la rutina "Databricks Weekly Digest" de los lunes a las 7:52 a.m. (Claude Doc con las novedades depuradas y sus fuentes oficiales).
 - **Reglas:** CLAUDE.md, sección 12.
 
 ## Seguimiento

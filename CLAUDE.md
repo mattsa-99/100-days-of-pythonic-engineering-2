@@ -205,7 +205,7 @@ Reglas:
 **Por qué este formato** (revisión del 19 nov 2026): se analizaron posts públicos de Zach Wilson y de una creadora de Data con 83k seguidores. Patrones: hook directo sin etiquetas, listas numeradas `Término → explicación`, entre 0 y 3 emojis, 0 o 1 hashtag, sin código en el cuerpo, y los posts personales con más reacciones. La muestra es pequeña (4 posts): se valida con la tabla de Métricas en la revisión del Día 08.
 
 **Cuándo publicar** (decidido por Mateo el 19 nov 2026; ajustar con las métricas propias):
-- **3 posts por semana, todos a las 9:00 a.m. hora Colombia** (8:00 a.m. hora CDMX): **martes y jueves** la serie de los 100 días, y **viernes** la serie de noticias "Databricks esta semana" (sección 12). No más de 2 posts de la serie por semana.
+- **3 posts por semana** (hora Colombia; CDMX una hora menos): **lunes 11:00 a.m.** la noticia de "Databricks esta semana" (sección 12), y **martes y jueves 9:00 a.m.** la serie de los 100 días. No más de 2 posts de la serie por semana.
 - Los dos días están en la mejor ventana de los estudios (martes a jueves por la mañana) y separados por un día, para que un post no le quite alcance al otro.
 - Evitar fines de semana y festivos (ej. 8 de diciembre en Colombia; 24, 25 y 31 de diciembre, y 1 de enero): ese día se salta al siguiente martes o jueves.
 - Anotar día y hora real de cada post en la tabla de Métricas del README para comparar después.
@@ -313,12 +313,12 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 
 Una noticia de Databricks por semana, la más relevante para Data Engineers, con un ejemplo real. Vive en `news/` y no cuenta para los 100 días.
 
-- **Cuándo**: todos los viernes a las 9:00 a.m. hora Colombia, con lo más relevante de la semana (confirmado por Mateo el 19 nov 2026). Si el viernes es festivo, se publica el jueves por la tarde o se salta esa semana.
+- **Cuándo**: todos los **lunes a las 11:00 a.m. hora Colombia**, con lo más relevante de la semana anterior (decidido por Mateo el 19 nov 2026). Se eligió el lunes para usar el documento de la rutina recién generado (corre a las 7:52 a.m.) sin desfase, y las 11:00 para tener tiempo de verificar y producir. Si el lunes es festivo en Colombia, la noticia pasa al miércoles a las 9:00 a.m.
 - **Carpeta**: `news/AAAA-wSS_slug/` (semana ISO), copiando `news/_plantilla/post.md`. Mismo contenido que un día: `post.md`, `example.py` o `example.sql`, `build.py`, el PDF o PNG y `preview/`.
 - **Seguimiento**: tabla en `news/README.md` (semana, fecha, noticia, fuente oficial, estado en Databricks, formato, archivo, estado, link) y su propia tabla de métricas.
 - **Fuente principal: la rutina "Databricks Weekly Digest" de Mateo** (rutina en la nube `trig_011GGiV5feniHgyxRKPVbtMv`, corre los lunes a las 7:52 a.m. hora Bogotá). Cada lunes crea un Claude Doc "Databricks Weekly: semana del <fecha>" con todas las novedades depuradas de la semana anterior (fuente oficial, estado, nube, relevancia) y 3 destacados.
-  - **Cómo leerla (cada jueves o viernes)**: `RemoteTrigger` → `list_runs` de esa rutina → `get_run_log` de la última ejecución → la última línea trae el enlace del documento → leerlo con el conector de Claude Docs (cargar antes el skill `docs`).
-  - **Completar la semana**: la rutina cubre la semana anterior al lunes. Antes de elegir, revisar también las release notes oficiales de lunes a jueves de la semana en curso (Azure Databricks y docs.databricks.com), por si hay algo más relevante.
+  - **Cómo leerla (cada lunes, después de las 7:52 a.m.)**: `RemoteTrigger` → `list_runs` de esa rutina → `get_run_log` de la última ejecución → la última línea trae el enlace del documento → leerlo con el conector de Claude Docs (cargar antes el skill `docs`).
+  - **Si la rutina falló o no hay documento ese lunes**: hacer la búsqueda equivalente en las release notes oficiales de la semana anterior (Azure Databricks y docs.databricks.com) y el blog oficial, con las mismas reglas de precisión. Si no da el tiempo para las 11:00, se publica el miércoles a las 9:00 a.m.
   - **No modificar la rutina**: es un entregable del trabajo de Mateo (comunidad de Databricks de Wizeline). Su horario, plantilla y correo no se tocan desde este repo.
   - **Separación trabajo / marca personal**: de la rutina solo se toman las novedades públicas con su enlace oficial. Nunca se menciona Wizeline ni KOF, ni se reutilizan sus entregables (decks, memes, flyers con estilo Wizeline). Su puntaje de relevancia está pensado para ese equipo: para LinkedIn se vuelve a evaluar pensando en un Data Engineer en general.
 - **Cómo elegir la noticia**: revisar lo publicado esa semana en fuentes oficiales (blog de Databricks, release notes de la plataforma, documentación). Elegir la de mayor impacto práctico para un Data Engineer en Azure + Databricks, y anotar en `post.md` por qué se eligió y qué se descartó. Nunca usar como fuente única un post de terceros.

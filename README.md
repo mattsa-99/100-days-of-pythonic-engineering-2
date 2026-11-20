@@ -7,7 +7,7 @@ Cada día tiene su carpeta en [`days/`](days/) con el post listo para copiar, el
 
 ## Dónde vamos
 
-**Ritmo:** martes y jueves la serie, viernes las noticias de Databricks. Todo a las 9:00 a.m. hora Colombia.
+**Ritmo:** lunes 11:00 a.m. la noticia de Databricks; martes y jueves 9:00 a.m. la serie (hora Colombia).
 
 **Último publicado:** Día 03 · **Siguiente:** Día 04 (Data Skew, PDF de 8 láminas listo en [`days/day04_data_skew/`](days/day04_data_skew/))
 
