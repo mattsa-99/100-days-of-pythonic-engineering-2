@@ -85,10 +85,11 @@ N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARD
 
 **Formatos alternativos**:
 - Imagen única: el mismo lienzo y la misma cabecera y pie, sin barra de progreso ni "Desliza".
-- Infografía animada (opcional): mismas paletas y fuentes; las animaciones solo se permiten en líneas conectoras (`stroke-dashoffset`).
-  - LinkedIn no reproduce HTML ni SVG animados: lo que se sube es un **video MP4** (o GIF). Verificar formatos y límites de tamaño vigentes antes de publicar.
-  - Entregables en `days/dayNN_slug/`: `dayNN_slug.png` (versión estática, **siempre**) y `dayNN_slug.mp4` (solo si la animación aporta). El `build.py` genera el HTML con la animación; el MP4 se graba de ese HTML.
-  - En esta máquina no hay `ffmpeg` ni Playwright: para grabar el MP4 hay que instalar `ffmpeg` (`brew install ffmpeg`) y decidirlo con Mateo antes de construirlo.
+- Infografía animada: **GIF animado que se sube como foto** (botón "Añadir una foto", no como video). LinkedIn lo muestra como imagen: sin controles, en bucle infinito, y al hacer clic se abre en el visor de fotos. No se sube MP4: el MP4 sí trae reproductor con pausa y barra, y no es el efecto buscado.
+  - Mismas paletas y fuentes. Varios bloques pequeños en movimiento a la vez (flujos, flechas, datos que viajan), porque la gente se queda leyendo cada flujo.
+  - Entregables en `days/dayNN_slug/`: `dayNN_slug.gif` (el que se sube) y `dayNN_slug.png` (versión estática de respaldo).
+  - Bucle corto: de 3 a 5 segundos a 15-20 FPS. El peso del GIF debe quedar por debajo de ~5 MB (límite de imágenes de LinkedIn, **VERIFICAR** el vigente antes de publicar). Si pesa de más: menos frames, menos colores o menos tamaño. El diseño plano y de pocos colores de este sistema comprime muy bien.
+  - Cómo se produce (por probar en el primer día animado): `build.py` genera el HTML con la animación controlada por un progreso `t` de 0 a 1; Chrome headless captura un frame por cada valor de `t`; y Pillow arma el GIF (`pip install pillow`, en un entorno virtual). No hay `ffmpeg` ni Pillow instalados en esta máquina. Alternativa manual en Mac: grabar el HTML con Kap y exportar a GIF.
 - "Ventana macOS" del plan V3 (días 10 y 12): se resuelve como carrusel corto Antes/Después con bloques `.code` del tema, sin los tres puntos de ventana ni sombras.
 
 **Límites prácticos para que nada se desborde** (aprendidos al renderizar):
