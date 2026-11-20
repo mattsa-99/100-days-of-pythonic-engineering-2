@@ -1,6 +1,6 @@
 # Databricks esta semana
 
-Serie paralela a los 100 días: **una noticia de Databricks por semana**, la más relevante para Data Engineers, explicada con un **ejemplo real** y en los formatos del sistema de diseño (imagen única o carrusel corto).
+Serie paralela a los 100 días: **una noticia de Databricks por semana**, la más relevante de toda la plataforma para cualquier rol (ingeniería, análisis, BI, ML/IA, gobierno, costos), explicada con un **ejemplo real** y en los formatos del sistema de diseño (imagen única o carrusel corto).
 
 - **Cuándo:** todos los lunes a las 11:00 a.m. hora Colombia, con lo más relevante de la semana anterior. Si el lunes es festivo, el miércoles a las 9:00 a.m.
 - **Numeración:** por semana ISO del año, aparte del conteo de los 100 días.

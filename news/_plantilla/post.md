@@ -12,7 +12,7 @@
 
 ## Por qué esta noticia
 
-<1-2 frases: por qué es la más relevante de la semana para un Data Engineer. Otras candidatas que se descartaron y por qué.>
+<1-2 frases: por qué es la más relevante de la semana en toda la plataforma y **para qué rol** es (ingeniería, análisis/BI, ML/IA, gobierno, costos). Otras candidatas que se descartaron y por qué.>
 
 ## Estructura visual
 
@@ -49,7 +49,7 @@ Si le sirve a alguien de tu equipo, compártelo ♻️
 
 Databricks esta semana · Semana SS. Sígueme para la serie 100 Days of Pythonic Engineering.
 
-#Databricks #DataEngineering #100DaysOfPythonicEngineering
+#Databricks <#HashtagDelRol> #100DaysOfPythonicEngineering
 ```
 
 ## Primer comentario
