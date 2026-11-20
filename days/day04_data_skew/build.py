@@ -16,6 +16,7 @@ FONTS = REPO / "design" / "fonts"
 TOTAL = 8
 AUTHOR = "Mateo Soto"
 ROLE = "Data Engineer"
+SERIES = "Pythonic Engineering"
 
 FONT_FILES: list[tuple[str, int, str]] = [
     ("Montserrat", 700, "montserrat-latin-700-normal.woff2"),
@@ -47,7 +48,7 @@ def chrome(idx: int, tone: str, swipe: bool = True) -> str:
     cue = '<div class="swipe">Desliza &rarr;</div>' if swipe else ""
     byline = f'<span><b>{AUTHOR}</b> <span class="role">&middot; {ROLE}</span></span>'
     return (
-        f'<div class="top"><span class="day">D&iacute;a 04 / 100</span>'
+        f'<div class="top"><span><span class="series">{SERIES} &middot; </span><span class="day">D&iacute;a 04 / 100</span></span>'
         f'<span class="lvl">Avanzado</span></div><div class="rule"></div>'
         f'{cue}'
         f'<div class="foot">{byline}<span class="num">{idx:02d} / {TOTAL:02d}</span></div>'

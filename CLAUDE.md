@@ -68,7 +68,7 @@ Reglas:
 **Lienzo**: 1080 x 1350 px (4:5), una lámina por página de PDF. Márgenes laterales de 84 px.
 
 **Estructura fija de cada lámina** (ya implementada en `chrome()` del ejemplo):
-- Cabecera: `DÍA NN / 100` a la izquierda y la píldora de nivel (`BÁSICO`, `INTERMEDIO`, `AVANZADO`) a la derecha, con una línea fina debajo.
+- Cabecera: `PYTHONIC ENGINEERING · DÍA NN / 100` a la izquierda (nombre de la serie atenuado con `.series`, día en el acento) y la píldora de nivel (`BÁSICO`, `INTERMEDIO`, `AVANZADO`) a la derecha, con una línea fina debajo.
 - Kicker de 1 a 3 palabras (ej. `ARREGLO 3`), titular y contenido.
 - Pie: `Mateo Soto · Data Engineer` a la izquierda (nombre en Montserrat, rol en Roboto atenuado) y `NN / TT` en Roboto Mono a la derecha. Igual en todas las láminas, cierre incluido.
 - Barra de progreso segmentada en el borde inferior.
@@ -80,7 +80,7 @@ Reglas:
 3. a N-1. **Contenido**: una idea por lámina; si hay código, como máximo 8 líneas por lámina.
 N. **Cierre (oscuro)**: pregunta para comentar y tres filas con etiquetas `GUARDA`, `DÍA NN+1` y `REPO`.
 
-**Firma**: constantes `AUTHOR = "Mateo Soto"` y `ROLE = "Data Engineer"` al inicio de `build.py`, usadas en el pie de todas las láminas. No agregar más (ni stack, ni certificaciones, ni bloque de autor): Mateo lo prefiere así.
+**Firma y serie**: constantes `AUTHOR = "Mateo Soto"`, `ROLE = "Data Engineer"` y `SERIES = "Pythonic Engineering"` al inicio de `build.py`. Firma en el pie y serie en la cabecera de todas las láminas. El nombre completo ("100 Days of Pythonic Engineering") no cabe junto a la píldora de nivel: el `/ 100` ya lo comunica. No agregar más (ni stack, ni certificaciones, ni bloque de autor): Mateo lo prefiere así.
 - La credibilidad viene del contenido: experiencia propia dentro del post ("lo he visto en...", "en entrevistas técnicas..."). Nunca se inventa: se deja `[TU ANÉCDOTA: ...]` en el copy para que Mateo la complete.
 
 ---

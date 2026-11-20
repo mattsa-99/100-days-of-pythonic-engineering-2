@@ -82,3 +82,6 @@ p.lead{font-size:38px;line-height:1.36;font-weight:400}
 
 /* firma: rol junto al nombre en el pie */
 .foot .role{font-weight:500;color:var(--mut)}
+
+/* nombre de la serie en la cabecera, atenuado para no competir con el día */
+.top .series{color:var(--mut)}
