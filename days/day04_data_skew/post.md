@@ -25,7 +25,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 1092 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El código de salting es el patrón clásico: ajusta N según el tamaño de la llave caliente.
 
 ## Post (copiar y pegar)

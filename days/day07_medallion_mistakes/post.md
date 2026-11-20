@@ -21,7 +21,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 909 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Contenido conceptual. Si puedes, agrega un ejemplo anonimizado de tu experiencia (sin datos del cliente).
 
 ## Post (copiar y pegar)

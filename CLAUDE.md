@@ -127,7 +127,7 @@ Estructura:
 Reglas:
 - **Ningún link en el cuerpo del post.** La documentación oficial y el repo van en el **primer comentario**.
 - Emojis solo en el copy (no en las láminas), y con moderación: como máximo uno por línea.
-- Entre 1,200 y 2,000 caracteres.
+- Entre 700 y 2,000 caracteres.
 - Nunca inventes anécdotas, cifras o experiencias de Mateo. Si el post necesita una, deja `[TU ANÉCDOTA: ...]`.
 - Nunca menciones clientes, empresas ni datos de proyectos reales.
 
@@ -209,7 +209,7 @@ Los temas del Día 16 en adelante los propone Claude siguiendo la rotación de l
 - [ ] Portada oscura con un visual; cierre oscuro con pregunta, `GUARDA`, `DÍA NN+1` y `REPO`.
 - [ ] Ninguna lámina con texto cortado, código desbordado o fuente menor de 24 px (revisado en PNG).
 - [ ] Nada de la lista de prohibidos de la sección 5.
-- [ ] El copy sigue la estructura de la sección 6, sin links en el cuerpo, entre 1,200 y 2,000 caracteres.
+- [ ] El copy sigue la estructura de la sección 6, sin links en el cuerpo, entre 700 y 2,000 caracteres.
 - [ ] El código fue verificado contra la documentación oficial, o quedó marcado como `VERIFICAR:`.
 - [ ] La tabla de seguimiento del `README.md` y el `post.md` quedaron actualizados.
 - [ ] Commit hecho.

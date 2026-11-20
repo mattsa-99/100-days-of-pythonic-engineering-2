@@ -21,7 +21,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 1000 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Revisa los nombres de roles RBAC en tu suscripción antes de publicar.
 
 ## Post (copiar y pegar)

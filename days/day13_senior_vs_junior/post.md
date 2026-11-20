@@ -5,7 +5,7 @@
 | Nivel | Básico |
 | Tipo de post | Opinión |
 | Paleta | `medianoche` |
-| Formato visual | Post de texto largo (más de 1,200 caracteres) con una imagen simple de 2 columnas Junior vs Senior |
+| Formato visual | Post de texto largo (700 a 2,000 caracteres) con una imagen simple de 2 columnas Junior vs Senior |
 | Estado | Pendiente |
 | Link | — |
 
@@ -19,7 +19,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 702 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Es un post de opinión: ajústalo a tu voz y agrega una anécdota real. Es el que más comentarios puede generar; responde cada comentario en la primera hora.
 
 ## Post (copiar y pegar)

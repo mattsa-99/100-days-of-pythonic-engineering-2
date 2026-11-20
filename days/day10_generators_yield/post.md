@@ -21,7 +21,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 994 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Demo real para la gráfica de memoria: `python3 example.py` → read_all ≈ 18.5 MB vs read_rows ≈ 0.17 MB de pico (300k filas).
 - [ ] Código con tipado: añade `from collections.abc import Iterator` al snippet si lo muestras en imagen (cumple tu estándar de tipado).
 

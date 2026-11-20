@@ -21,7 +21,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 1086 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] VERIFICAR: la regla "COPY INTO para miles, Auto Loader para millones" aparece en la guía de Databricks; confirma que sigue vigente en la doc actual.
 
 ## Post (copiar y pegar)

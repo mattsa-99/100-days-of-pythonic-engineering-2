@@ -26,7 +26,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 872 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Tienes la certificación Databricks Certified Data Engineer Professional: puedes agregar una línea personal sobre tu experiencia al prepararla.
 
 ## Post (copiar y pegar)

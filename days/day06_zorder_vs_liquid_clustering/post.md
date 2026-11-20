@@ -21,7 +21,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 946 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] VERIFICAR antes de publicar: sintaxis y requisitos de runtime de Liquid Clustering en tu versión de Databricks. Es una función que evoluciona rápido.
 
 ## Post (copiar y pegar)

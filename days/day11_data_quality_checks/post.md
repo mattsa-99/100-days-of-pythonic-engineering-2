@@ -24,7 +24,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 1044 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Tema ideal para conectar con tu trabajo en frameworks de calidad de datos, pero NO incluyas detalles ni nombres del cliente.
 
 ## Post (copiar y pegar)

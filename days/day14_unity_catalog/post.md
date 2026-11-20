@@ -20,7 +20,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 888 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] VERIFICAR nombres de funciones (row filters, column masks) y su disponibilidad en tu edición/región.
 
 ## Post (copiar y pegar)

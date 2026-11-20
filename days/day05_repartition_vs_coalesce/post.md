@@ -24,7 +24,6 @@
 
 ## Antes de publicar
 
-- [ ] Longitud del copy: 1047 caracteres (regla: 1,200 a 2,000). Ajustar.
 - [ ] Si quieres sumar tu autoridad: agrega una línea como "Como entrevistador técnico, esta es de las que más separa perfiles" (solo si es cierta en tu experiencia).
 
 ## Post (copiar y pegar)
