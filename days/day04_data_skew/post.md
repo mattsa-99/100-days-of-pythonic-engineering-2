@@ -5,19 +5,20 @@
 | Nivel | Avanzado |
 | Tipo de post | Errores que cuestan plata |
 | Paleta | `pino` |
-| Formato visual | Carrusel PDF (7 láminas, 1080x1350) |
+| Formato visual | Carrusel PDF (8 láminas, 1080x1350) |
 | Estado | Listo (`day04_data_skew.pdf`) |
 | Link | — |
 
 ## Estructura visual
 
-- 1. Portada: ¿Tu job espera una hora por UNA sola tarea?
-- 2. Qué es el skew (dibujo de 4 particiones desiguales)
-- 3. Cómo detectarlo en la Spark UI (3 señales)
-- 4. Fix 1 y 2: filtrar nulos + AQE skew join
-- 5. Fix 3: broadcast (conexión con Día 3)
-- 6. Fix 4: salting con código
-- 7. Cierre + pregunta + CTA Día 5
+- 1. Portada (oscura): ¿Tu job espera una hora por UNA sola tarea? + barras de tareas
+- 2. El problema (clara): qué es el skew, por qué pasa (shuffle junta la misma key) + definiciones
+- 3. Cómo detectarlo (oscura): 3 señales en la Spark UI, cada una explicada
+- 4. Arreglos 1 y 2 (clara): quitar keys NULL + AQE
+- 5. Arreglo 3 (oscura): broadcast (conexión con Día 3) + definición de executor
+- 6. Arreglo 4, la idea (clara): salting con mini tablas en 3 pasos
+- 7. Arreglo 4, el código (oscura): los mismos 3 pasos en PySpark
+- 8. Cierre (oscura): pregunta + GUARDA / DÍA 05 / REPO
 
 ## Hook alternativo
 

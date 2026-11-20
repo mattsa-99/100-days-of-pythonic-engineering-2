@@ -1,4 +1,4 @@
-"""Build the Day 04 LinkedIn carousel (7 slides, 1080x1350) as one HTML file.
+"""Build the Day 04 LinkedIn carousel (8 slides, 1080x1350) as one HTML file.
 
 Usage:
     python3 build.py <theme> <output.html>
@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 REPO = ROOT.parents[1]
 FONTS = REPO / "design" / "fonts"
-TOTAL = 7
+TOTAL = 8
 
 FONT_FILES: list[tuple[str, int, str]] = [
     ("Montserrat", 700, "montserrat-latin-700-normal.woff2"),
@@ -206,51 +206,97 @@ def s5() -> str:
     return slide(5, "dark", body)
 
 
-# ---------- 06 · salting ----------
+# ---------- 06 · salting: la idea ----------
+def mini_table(title: str, header: list[str], rows: list[list[str]], dup: bool = False) -> str:
+    """Small data table drawn with divs, used to show real rows in a slide."""
+    cell = "flex:1;padding:8px 14px;font-family:Roboto Mono;font-size:25px"
+    head = "".join(
+        f'<span style="{cell};font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.1em;color:var(--mut)">{h.upper()}</span>'
+        for h in header
+    )
+    bg = "color-mix(in srgb, var(--a1) 35%, var(--icebg))" if dup else "transparent"
+    body = "".join(
+        f'<div style="display:flex;border-top:2px solid var(--rule);background:{bg}">'
+        + "".join(
+            f'<span style="{cell};{"color:var(--a1d);font-weight:500" if j == 1 else ""}">{v}</span>'
+            for j, v in enumerate(r)
+        )
+        + "</div>"
+        for r in rows
+    )
+    return (
+        f'<div style="flex:1"><div style="font-size:27px;line-height:1.3;margin-bottom:12px;min-height:72px">{title}</div>'
+        f'<div style="display:flex">{head}</div>{body}</div>'
+    )
+
+
 def s6() -> str:
-    cell = (
-        'height:58px;display:flex;align-items:center;justify-content:center;'
-        'font-family:Roboto Mono;font-weight:500;font-size:25px'
+    big = mini_table(
+        "<b>1.</b> Tabla grande: cada fila recibe un <b>salt</b> al azar.",
+        ["key", "salt"], [["A", "2"], ["A", "0"], ["A", "3"], ["A", "1"]],
     )
-    before = (
-        '<div style="display:flex;align-items:center;gap:20px">'
-        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;width:150px;color:var(--mut)">ANTES</span>'
-        f'<div style="flex:1;{cell};background:var(--a1d);color:#E7F3F1">A · 1 tarea con todo</div></div>'
+    small = mini_table(
+        "<b>2.</b> Tabla pequeña: la fila de A se copia una vez por salt.",
+        ["key", "salt", "city"], [["A", "0", "Lima"], ["A", "1", "Lima"], ["A", "2", "Lima"], ["A", "3", "Lima"]],
+        dup=True,
     )
-    parts = "".join(
-        f'<div style="flex:1;{cell};background:color-mix(in srgb, var(--a1) 55%, var(--icebg));color:#071A22">A_{i}</div>'
+    tasks = "".join(
+        f'<div style="flex:1;border:2px solid var(--a1d);padding:12px 0;text-align:center;font-family:Roboto Mono;font-size:25px">'
+        f'A&middot;{i}<div style="font-family:Roboto;font-size:24px;color:var(--mut)">tarea {i + 1}</div></div>'
         for i in range(4)
     )
-    after = (
-        '<div style="display:flex;align-items:center;gap:20px;margin-top:12px">'
-        '<span style="font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.12em;width:150px;color:var(--mut)">DESPUÉS</span>'
-        f'<div style="flex:1;display:flex;gap:6px">{parts}</div></div>'
-    )
-    code = (
-        '<div class="code" style="margin-top:30px;font-size:26px;padding:26px 30px">'
-        'N = <span class="n">8</span>  <span class="c"># en cuántos pedazos partir la key</span>\n'
-        '<span class="c"># Grande: cada fila recibe una sal de 0 a N-1</span>\n'
-        'big = big.<span class="f">withColumn</span>(\n'
-        '    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>))\n'
-        '<span class="c"># Pequeña: una copia por cada sal posible</span>\n'
-        'salts = F.<span class="f">array</span>(*[F.<span class="f">lit</span>(i) <span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(N)])\n'
-        'small = small.<span class="f">withColumn</span>(<span class="s">"salt"</span>, F.<span class="f">explode</span>(salts))\n'
-        'joined = big.<span class="f">join</span>(small, [<span class="s">"key"</span>, <span class="s">"salt"</span>])</div>'
-    )
     body = (
-        '<div style="margin-top:48px"><div class="kicker">Arreglo 4</div>'
-        '<h2>Salting: parte la key <span class="hl">caliente</span>.</h2>'
-        '<p class="lead" style="margin-top:20px;font-size:31px">A cada fila le agregas un número al azar, la <b>sal</b>. '
-        'La key A se vuelve A_0, A_1, A_2... y se reparte en varias tareas.</p></div>'
-        f'<div style="margin-top:28px">{before}{after}</div>'
-        + code +
-        '<p class="cap" style="font-size:29px;margin-top:18px"><b>El costo:</b> la tabla pequeña se copia N veces.</p>'
+        '<div style="margin-top:48px"><div class="kicker">Arreglo 4 &middot; Salting</div>'
+        '<h2>Parte la key <span class="hl">caliente</span>.</h2>'
+        '<p class="lead" style="margin-top:20px;font-size:31px">La key A tiene millones de filas y cae en una sola tarea. '
+        'La idea: agregar una columna extra, <b>salt</b>, para dividirla.</p></div>'
+        f'<div style="display:flex;gap:40px;margin-top:30px">{big}{small}</div>'
+        '<div style="font-size:27px;line-height:1.3;margin-top:30px"><b>3.</b> Join por <b>key + salt</b>: '
+        'cada pareja va a su propia tarea, en paralelo.</div>'
+        f'<div style="display:flex;gap:12px;margin-top:14px">{tasks}</div>'
+        '<p class="cap" style="font-size:29px"><b>Antes:</b> 1 tarea con todas las filas de A. '
+        '<b>Ahora:</b> 4 tareas con una cuarta parte cada una.</p>'
     )
     return slide(6, "light", body)
 
 
-# ---------- 07 · cierre ----------
+# ---------- 07 · salting: el código ----------
 def s7() -> str:
+    def step(n: int, title: str, why: str, code: str) -> str:
+        why_html = f'<p class="why" style="margin:8px 0 14px">{why}</p>' if why else '<div style="height:14px"></div>'
+        return (
+            f'<div style="margin-top:30px"><div class="step"><span class="n">{n}</span>{title}</div>{why_html}'
+            f'<div class="code" style="font-size:26px;padding:22px 30px">{code}</div></div>'
+        )
+
+    body = (
+        '<div style="margin-top:48px"><div class="kicker">Arreglo 4 &middot; El código</div>'
+        '<h2>Ahora, en <span class="hl">código</span>.</h2></div>'
+        + step(
+            1, "Salt al azar en la tabla grande",
+            "rand() da un número entre 0 y 1. Por N y a entero: 0, 1, 2 o 3.",
+            'N = <span class="n">4</span>  <span class="c"># en cuántas partes dividir la key</span>\n'
+            'big = big.<span class="f">withColumn</span>(\n'
+            '    <span class="s">"salt"</span>, (F.<span class="f">rand</span>() * N).<span class="f">cast</span>(<span class="s">"int"</span>))',
+        )
+        + step(
+            2, "Una copia por salt en la pequeña",
+            "explode convierte la lista [0, 1, 2, 3] en 4 filas.",
+            'salts = F.<span class="f">array</span>(*[F.<span class="f">lit</span>(i) <span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(N)])\n'
+            'small = small.<span class="f">withColumn</span>(<span class="s">"salt"</span>, F.<span class="f">explode</span>(salts))',
+        )
+        + step(
+            3, "Join por key + salt", "",
+            'joined = big.<span class="f">join</span>(small, [<span class="s">"key"</span>, <span class="s">"salt"</span>])',
+        )
+        + '<p class="cap" style="font-size:29px;color:var(--mut);margin-top:22px"><b style="color:#E7F3F1">El costo:</b> '
+        'la tabla pequeña crece N veces.</p>'
+    )
+    return slide(7, "dark", body)
+
+
+# ---------- 08 · cierre ----------
+def s8() -> str:
     body = (
         '<div style="margin-top:64px"><div class="kicker">Tu turno</div>'
         '<h1 style="font-size:96px">&iquest;Cu&aacute;l ha sido tu peor caso de <span class="hl">skew</span>?</h1>'
@@ -263,13 +309,13 @@ def s7() -> str:
         '<div style="display:flex;gap:26px;align-items:center;padding:36px 0;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule)">'
         '<span class="tag">Repo</span><span style="font-family:Roboto Mono;font-size:28px">github.com/mateosotoa/<br>100-days-of-pythonic-engineering</span></div></div>'
     )
-    return slide(7, "dark", body, swipe=False)
+    return slide(8, "dark", body, swipe=False)
 
 
 def main() -> None:
     theme, out = sys.argv[1], Path(sys.argv[2])
     css = (REPO / "design" / "theme.css").read_text(encoding="utf-8")
-    slides = "".join(f() for f in (s1, s2, s3, s4, s5, s6, s7))
+    slides = "".join(f() for f in (s1, s2, s3, s4, s5, s6, s7, s8))
     html = (
         f'<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Dia 04 - Data Skew</title>'
         f"<style>{font_css()}\n{css}</style></head><body data-theme=\"{theme}\">{slides}</body></html>"

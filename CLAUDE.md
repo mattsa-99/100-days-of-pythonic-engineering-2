@@ -52,7 +52,7 @@ Las paletas viven en `design/theme.css`, se activan con `<body data-theme="...">
 Reglas:
 - **Una sola palabra o frase resaltada por titular** (`<span class="hl">`). En lámina clara se ve como subrayado de marcador; en lámina oscura, como texto de color.
 - El resaltado `--hl` se usa también para **el dato crítico** de un gráfico (la barra culpable, el valor máximo). Nada más.
-- Las láminas **alternan oscuro / claro**: la portada y el cierre siempre son oscuros.
+- Las láminas **alternan oscuro / claro**: la portada y el cierre siempre son oscuros. Con un número par de láminas, la penúltima es oscura y queda junto al cierre (única excepción permitida).
 - Colores derivados: usar `color-mix(in srgb, var(--a1) 45%, var(--icebg))`, nunca hex sueltos.
 
 ---
@@ -108,6 +108,9 @@ Los temas pueden ser avanzados, pero el carrusel debe entenderlo alguien que sab
   - Antes de cada bloque, una frase en español dice qué hace y por qué.
   - En el snippet de la lámina, los comentarios van en español y narran los pasos (`# Grande: cada fila recibe una sal`). `example.py` sigue en inglés.
   - Nada de variables auxiliares que no aporten (ej. `conf = spark.conf`).
+- **Técnicas poco conocidas (salting, SCD2, MERGE, bucketing...)**: dos láminas en vez de una.
+  - Lámina de la idea: un ejemplo con filas reales en mini tablas (ver `mini_table()` del Día 04), en pasos numerados y con el resultado ("Antes: ... Ahora: ..."). Sin código.
+  - Lámina del código: los mismos pasos numerados, cada uno con una frase de qué hace la función menos obvia (ej. `rand()`, `explode`). Usa los mismos valores que el ejemplo (si el ejemplo tiene salts 0 a 3, `N = 4`).
 - **Antes / Después** cuando una técnica transforma datos (ej. `ANTES: A · 1 tarea` → `DESPUÉS: A_0 A_1 A_2 A_3`).
 - **Prueba final por lámina**: ¿alguien que no conoce el término entendería qué pasa y por qué importa? Si no, falta una definición o un visual.
 
