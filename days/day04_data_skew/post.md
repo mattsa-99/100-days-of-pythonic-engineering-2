@@ -26,8 +26,7 @@
 
 ## Antes de publicar
 
-- [ ] Claridad del copy (CLAUDE.md 4.1 y 6): definir en pocas palabras AQE, broadcast y salting la primera vez que aparecen.
-- [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El código de salting es el patrón clásico: ajusta N según el tamaño de la key caliente.
+- [ ] Revisa en tu runtime que AQE esté habilitado (suele venir activo en Databricks recientes). El salting usa N = 4 para coincidir con el ejemplo de las láminas; en un caso real ajusta N según el tamaño de la key caliente.
 
 ## Post (copiar y pegar)
 
@@ -36,27 +35,31 @@
 
 ¿Tu job lleva una hora esperando por UNA sola tarea? 🐢
 
-Casi siempre es data skew: tus datos están mal repartidos y una partición recibe muchísimo más que las demás. Todo el stage espera a la más lenta.
+Casi siempre es data skew. En un join, Spark junta las filas con la misma key (la columna del join, ej. customer_id). Si una key concentra casi todas las filas, una sola partición recibe muchísimo más que las demás, y todo el stage (cada etapa del job) espera a la tarea más lenta.
 
 🔎 Cómo detectarlo en la Spark UI:
 ✅ Una tarea dura 10x más que la mediana
-✅ Esa tarea tiene un Shuffle Read gigante
-✅ Hay spill a disco solo en unas pocas tareas
+✅ Esa tarea tiene un Shuffle Read gigante (los datos que le llegaron por la red en el shuffle)
+✅ Hay spill a disco solo en unas pocas tareas (no le cabe en memoria y usa el disco)
 
 🛠️ Cómo arreglarlo (de menos a más esfuerzo):
-1️⃣ Filtra las keys nulas antes del join
-2️⃣ Verifica que AQE esté activo: spark.sql.adaptive.skewJoin.enabled
-3️⃣ Haz broadcast si la otra tabla es pequeña (Día 3 👆)
-4️⃣ Salting: reparte la key "caliente" en N pedazos
+1️⃣ Filtra las keys nulas antes del join: nunca hacen match, pero viajan juntas a una sola partición
+2️⃣ Activa AQE (Adaptive Query Execution): Spark mide las particiones mientras corre y divide las gigantes. Config: spark.sql.adaptive.skewJoin.enabled
+3️⃣ Haz broadcast si la otra tabla es pequeña: Spark la copia completa a cada executor y no hay shuffle (lo vimos en el Día 3)
+4️⃣ Salting: agrega una columna al azar, el salt, para partir la key caliente en N pedazos
 
-N = 8
+N = 4  # en cuántas partes partir la key
+# Tabla grande: cada fila recibe un salt al azar (0 a N-1)
 big = big.withColumn("salt", (F.rand() * N).cast("int"))
-small = small.withColumn(
-    "salt", F.explode(F.array(*[F.lit(i) for i in range(N)]))
-)
+# Tabla pequeña: una copia por cada salt
+salts = F.array(*[F.lit(i) for i in range(N)])
+small = small.withColumn("salt", F.explode(salts))
+# Join por key + salt: la key caliente se reparte en N tareas
 joined = big.join(small, ["key", "salt"])
 
-💬 ¿Cuál ha sido tu peor caso de skew? Cuéntame 👇
+⚠️ El costo del salting: la tabla pequeña se copia N veces.
+
+💬 ¿Cuál ha sido tu peor caso de skew? Cuéntame qué tan grande era la tabla y cómo lo resolviste.
 
 Sígueme para el Día 5/100 📌
 
